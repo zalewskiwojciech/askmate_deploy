@@ -13,7 +13,7 @@ def get_all_data(my_path):
         reader = csv.DictReader(csvfile, delimiter = ',')
         data_list = []
         for row in reader:
-            data_list.append(dict(row))
+            data_list.insert(0, dict(row))
     return data_list
 
 
