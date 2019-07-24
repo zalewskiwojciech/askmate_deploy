@@ -24,6 +24,7 @@ def show_question_and_answers(question_id: int):
                            ANSWER_HEADERS=connection.ANSWER_HEADERS
                            )
 
+
 @app.route('/add-question')
 def add_question():
     id = len(data_manager.question_list)
@@ -39,6 +40,16 @@ def add_question():
 
 
 def new_question():
+
+
+@app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
+def new_answer(question_id: int):
+    if request.method == 'POST':
+        message = request.form['message']
+        image = request.form['image']
+        data_list = data_manager.transform_answer_into_dictionary(question_id, message, image)
+        connection.export_all_data(connection.ANSWER_PATH, data_list, connection.ANSWER_HEADERS)
+    return render_template('new_answer.html')
 
 
 
