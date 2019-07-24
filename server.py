@@ -24,6 +24,23 @@ def show_question_and_answers(question_id: int):
                            ANSWER_HEADERS=connection.ANSWER_HEADERS
                            )
 
+@app.route('/add-question')
+def add_question():
+    id = len(data_manager.question_list)
+    submission_time = util.calculate_timestamp()
+    view_number = 0
+    vote_number = 0
+    title = request.form['title']
+    message = request.form['message']
+    image = request.form['image']
+
+
+    return render_template('add-question.html')
+
+
+def new_question():
+
+
 
 if __name__ == '__main__':
     app.run(
