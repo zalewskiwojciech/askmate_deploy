@@ -16,7 +16,10 @@
     <tr>
         {% for field in single_question.values() %}
              <td>{{ field }}</td>
+
         {% endfor %}
+         <button onclick="{{url_for('question_vote_up')}}">Vote this question up</button>
+         <button onclick="{{url_for('question_vote_down')}}">Vote this question down</button>
     </tr>
 </table>
 
@@ -38,9 +41,16 @@
     </tr>
         {% for single_answer in all_answers %}
     <tr>
+
+
+
         {% for field in single_answer.values() %}
-            <td>{{ field }}</td>
+               <td>{{ field }}</td>
         {% endfor %}
+            <td> <button onclick="{{url_for('answer_vote_up')}}">Vote this answer up</button> </td>
+            <td> <button onclick="{{url_for('answer_vote_down')}}">Vote this answer down</button> </td>
+
+
     </tr>
         {% endfor %}
 </table>

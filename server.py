@@ -24,6 +24,23 @@ def show_question_and_answers(question_id: int):
                            ANSWER_HEADERS=connection.ANSWER_HEADERS
                            )
 
+@app.route('/question/vote_up')
+def question_vote_up():
+    return
+
+@app.route('/question/vote_down')
+def question_vote_down():
+    return
+
+
+@app.route('/answer/vote_up')
+def answer_vote_up():
+    return
+
+@app.route('/question/vote_down')
+def answer_vote_down():
+    return
+
 
 if __name__ == '__main__':
     app.run(
