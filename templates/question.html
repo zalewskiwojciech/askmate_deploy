@@ -20,24 +20,32 @@
     </tr>
 </table>
 
+
+{% if not all_answers %}
+    <p>                         No answers for that question                                </p>
+
+
+{% else %}
 <table title="ANSWERS FOR GIVEN QUESTION">
+
 
 <table>
     <tr>
         {% for header in ANSWER_HEADERS %}
             <th>{{header}}</th>
         {% endfor %}
+
     </tr>
         {% for single_answer in all_answers %}
     <tr>
         {% for field in single_answer.values() %}
-             <td>{{ field }}</td>
+            <td>{{ field }}</td>
         {% endfor %}
     </tr>
         {% endfor %}
 </table>
 
 </table>
-
+{%  endif %}
 </body>
 </html>

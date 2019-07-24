@@ -16,5 +16,6 @@ def get_all_answers_for_single_question (question_id, answer_list):
     for answer in answer_list:
         if answer['question_id'] == question_id:
             all_answers_for_single_question.append(answer)
-
+    if len(all_answers_for_single_question) == 0:
+            return False
     return all_answers_for_single_question
