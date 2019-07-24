@@ -11,9 +11,11 @@
 
             <tr>
                 {% for item in question.values() %}
-                    <td>
-                        {{ item }}
-                    </td>
+                    {% if item == question['title'] %}
+                        <td><a href="{{url_for('show_question_and_answers', question_id=question['id'])}}"> {{ item }} </a></td>
+                    {% else %}
+                        <td>{{ item }}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}
