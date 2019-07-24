@@ -22,4 +22,7 @@ def export_all_data(my_path, data_list, fieldnames):
 
     with open(my_path, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
-        writer.writerow(data_list)
+        writer.writeheader()
+        writer.writerows(data_list)
+
+

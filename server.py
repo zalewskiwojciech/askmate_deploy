@@ -25,21 +25,19 @@ def show_question_and_answers(question_id: int):
                            )
 
 
-@app.route('/add-question')
-def add_question():
-    id = len(data_manager.question_list)
-    submission_time = util.calculate_timestamp()
-    view_number = 0
-    vote_number = 0
-    title = request.form['title']
-    message = request.form['message']
-    image = request.form['image']
-
+@app.route('/add-question', methods=['GET', 'POST'])
+def new_question():
+    if request.method == 'POST':
+        title = request.form['title']
+        message = request.form['message']
+        image = request.form['image']
+        new_row = data_manager.transform_question_into_dictionary(title, message, image)
+        data_list = data_manager.add_new_row_to_data_list(new_row, data_manager.question_list)
+        connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
+        return redirect('/')
 
     return render_template('add-question.html')
 
-
-def new_question():
 
 
 @app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
@@ -49,6 +47,7 @@ def new_answer(question_id: int):
         image = request.form['image']
         data_list = data_manager.transform_answer_into_dictionary(question_id, message, image)
         connection.export_all_data(connection.ANSWER_PATH, data_list, connection.ANSWER_HEADERS)
+
     return render_template('new_answer.html')
 
 
