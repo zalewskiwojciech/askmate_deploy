@@ -33,5 +33,8 @@ def transform_answer_into_dictionary(question_id, message, image):
     return answer
 
 
+def add_new_row_to_data_list(new_row, data_list):
 
+    data_list = data_list.append(new_row)
+    return data_list
 
