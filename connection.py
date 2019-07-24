@@ -23,3 +23,9 @@ def add_user_story(story):
         for item in story:
             file.write(item)
             file.write(';')
+
+
+def export_all_data(my_path, data_list, fieldnames):
+    with open(my_path, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
+        writer.writerow(data_list)
