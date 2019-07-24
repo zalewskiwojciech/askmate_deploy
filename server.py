@@ -31,7 +31,7 @@ def new_answer(question_id: int):
         image = request.form['image']
         data_list = data_manager.transform_answer_into_dictionary(question_id, message, image)
         connection.export_all_data(connection.ANSWER_PATH, data_list, connection.ANSWER_HEADERS)
-    return render_template('new_answer.html')
+    return render_template('new_answer.html', question_id = question_id)
 
 
 if __name__ == '__main__':
