@@ -16,15 +16,6 @@ def get_all_data(my_path):
             data_list.insert(0, dict(row))
     return data_list
 
-
-def add_user_story(story):
-    with open(DATA_FILE_PATH, 'a') as file:
-        file.write('\n')
-        for item in story:
-            file.write(item)
-            file.write(';')
-
-
 def export_all_data(my_path, data_list, fieldnames):
     with open(my_path, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
