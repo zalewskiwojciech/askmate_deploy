@@ -2,7 +2,7 @@ import csv
 import os
 
 QUESTION_PATH = os.getenv('QUESTION_PATH') if 'QUESTION_PATH' in os.environ else 'sample_data/question.csv'
-ANSWER_PATH = os.getenv('ANSWER_PATH') if 'ANSWER_PATH' in os.environ else 'answer.csv'
+ANSWER_PATH = os.getenv('ANSWER_PATH') if 'ANSWER_PATH' in os.environ else 'sample_data/answer.csv'
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
