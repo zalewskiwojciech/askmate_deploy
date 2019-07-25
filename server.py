@@ -15,7 +15,7 @@ def show_list():
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id, data_manager.get_question_list())
-    answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id, data_manager.answer_list)
+    answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id, data_manager.get_answer_list())
 
     return render_template('question.html',
                            question_id=question_id,
