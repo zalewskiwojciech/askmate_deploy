@@ -53,6 +53,33 @@ def answer_vote_down(answer_id: int):
                            question_list=data_manager.question_list,
                            QUESTION_HEADERS=connection.QUESTION_HEADERS)
 
+@app.route('/add-question', methods=['GET', 'POST'])
+def new_question():
+    if request.method == 'POST':
+        title = request.form['title']
+        message = request.form['message']
+        image = request.form['image']
+        new_row = data_manager.transform_question_into_dictionary(title, message, image)
+        data_list = data_manager.add_new_row_to_data_list(new_row, data_manager.question_list)
+        connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
+        return redirect('/')
+
+    return render_template('add-question.html')
+
+
+
+@app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
+def new_answer(question_id: int):
+    if request.method == 'POST':
+        message = request.form['message']
+        image = request.form['image']
+        data_list = data_manager.transform_answer_into_dictionary(question_id, message, image)
+        connection.export_all_data(connection.ANSWER_PATH, data_list, connection.ANSWER_HEADERS)
+
+    return render_template('new_answer.html')
+
+
+
 if __name__ == '__main__':
     app.run(
         debug = True,

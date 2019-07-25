@@ -18,12 +18,13 @@ def get_all_data(my_path):
     return data_list
 
 
-def export_all_data(my_path, data_list, fieldnames):
-
-    with open(my_path, 'w') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
-        writer.writeheader()
-        writer.writerows(data_list)
+<<<<<<< HEAD
+def add_user_story(story):
+    with open(DATA_FILE_PATH, 'a') as file:
+        file.write('\n')
+        for item in story:
+            file.write(item)
+            file.write(';')
 
 def modify_data(my_path, required_id, operator_ :int, modified_element, file_type_headers):
     existing_data = get_all_data(my_path)
@@ -40,3 +41,13 @@ def modify_data(my_path, required_id, operator_ :int, modified_element, file_typ
                     my_value += operator_
                     row[modified_element] = my_value
              writer.writerow(row)
+=======
+def export_all_data(my_path, data_list, fieldnames):
+
+    with open(my_path, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
+        writer.writeheader()
+        writer.writerows(data_list)
+
+
+>>>>>>> 1449795d3af3a104381edc32a9d03b66017339e5
