@@ -41,7 +41,7 @@ def transform_answer_into_dictionary(question_id, message, image):
 
 def transform_question_into_dictionary(title, message, image):
     question = {}
-    question['id'] = len(question_list)
+    question['id'] = len(get_question_list())
     question['submission_time'] = util.calculate_timestamp()
     question['view_number'] = 0
     question['vote_number'] = 0
