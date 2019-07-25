@@ -39,7 +39,12 @@ def question_vote_down(question_id: int):
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
     connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
-
+    answer_list = data_manager.get_answer_list()
+    question_id = None
+    for answer in answer_list:
+        if answer['id'] == answer_id:
+            question_id = answer['question_id']
+            break
     return redirect(f'/question/{question_id}')
 
 

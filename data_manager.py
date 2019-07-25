@@ -31,7 +31,7 @@ def get_all_answers_for_single_question (question_id, answer_list):
 
 def transform_answer_into_dictionary(question_id, message, image):
     answer = {}
-    answer['id'] = util.find_biggest_answer_id_for_this_question(question_id, answer_list)+1
+    answer['id'] = util.find_biggest_answer_id(get_answer_list()) + 1
     answer['submission_time'] = util.calculate_timestamp()
     answer['vote_number'] = 0
     answer['question_id'] = question_id
