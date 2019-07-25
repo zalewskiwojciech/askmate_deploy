@@ -23,3 +23,19 @@ def add_user_story(story):
         for item in story:
             file.write(item)
             file.write(';')
+
+def modify_data(my_path, required_id, operator_ :int, modified_element, file_type_headers):
+    existing_data = get_all_data(my_path)
+
+    with open(my_path, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=file_type_headers)
+        writer.writeheader()
+
+        for row in existing_data:
+             if row['id'] == required_id:
+                if not row[modified_element] == 0 and operator_ != -1:
+
+                    my_value = int(row[modified_element])
+                    my_value += operator_
+                    row[modified_element] = my_value
+             writer.writerow(row)

@@ -7,6 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def show_list():
+
     return render_template('list.html',
                            question_list = data_manager.question_list,
                            QUESTION_HEADERS = connection.QUESTION_HEADERS)
@@ -24,23 +25,33 @@ def show_question_and_answers(question_id: int):
                            ANSWER_HEADERS=connection.ANSWER_HEADERS
                            )
 
-@app.route('/question/vote_up')
-def question_vote_up():
-    return
+@app.route('/question/vote_up/<question_id>')
+def question_vote_up(question_id: int):
+    connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    return render_template('list.html',
+                           question_list=data_manager.question_list,
+                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
 
-@app.route('/question/vote_down')
-def question_vote_down():
-    return
+@app.route('/question/vote_down/<question_id>')
+def question_vote_down(question_id: int):
+    connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
+    return render_template('list.html',
+                           question_list=data_manager.question_list,
+                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
 
+@app.route('/answer/vote_up/<answer_id>')
+def answer_vote_up(answer_id: int):
+    connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
+    return render_template('list.html',
+                           question_list=data_manager.question_list,
+                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
+@app.route('/answer/vote_down/<answer_id>')
 
-@app.route('/answer/vote_up')
-def answer_vote_up():
-    return
-
-@app.route('/question/vote_down')
-def answer_vote_down():
-    return
-
+def answer_vote_down(answer_id: int):
+    connection.modify_data(connection.ANSWER_PATH, answer_id, +-1, 'vote_number', connection.ANSWER_HEADERS)
+    return render_template('list.html',
+                           question_list=data_manager.question_list,
+                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
 
 if __name__ == '__main__':
     app.run(
