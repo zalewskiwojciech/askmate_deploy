@@ -36,7 +36,7 @@ def modify_data(my_path, required_id, operator_ :int, modified_element, file_typ
 
         for row in existing_data:
              if row['id'] == required_id:
-                if not (row[modified_element] == 0 and operator_ != -1):
+                if not (row[modified_element] == '0' and operator_ == -1):
 
                     my_value = int(row[modified_element])
                     my_value += operator_
