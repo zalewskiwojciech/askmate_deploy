@@ -9,12 +9,12 @@ app = Flask(__name__)
 def show_list():
 
     return render_template('list.html',
-                           question_list = data_manager.question_list,
+                           question_list = data_manager.get_question_list(),
                            QUESTION_HEADERS = connection.QUESTION_HEADERS)
 
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
-    single_question=data_manager.get_single_question(question_id, data_manager.question_list)
+    single_question=data_manager.get_single_question(question_id, data_manager.get_question_list())
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id, data_manager.answer_list)
 
     return render_template('question.html',
@@ -28,30 +28,26 @@ def show_question_and_answers(question_id: int):
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
     connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
-    return render_template('list.html',
-                           question_list=data_manager.question_list,
-                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
+    return redirect(f'/question/{question_id}')
+
 
 @app.route('/question/vote_down/<question_id>')
 def question_vote_down(question_id: int):
     connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
-    return render_template('list.html',
-                           question_list=data_manager.question_list,
-                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
+    return redirect(f'/question/{question_id}')
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
     connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
-    return render_template('list.html',
-                           question_list=data_manager.question_list,
-                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
-@app.route('/answer/vote_down/<answer_id>')
 
+    return redirect(f'/question/{question_id}')
+
+
+@app.route('/answer/vote_down/<answer_id>')
 def answer_vote_down(answer_id: int):
-    connection.modify_data(connection.ANSWER_PATH, answer_id, +-1, 'vote_number', connection.ANSWER_HEADERS)
-    return render_template('list.html',
-                           question_list=data_manager.question_list,
-                           QUESTION_HEADERS=connection.QUESTION_HEADERS)
+    connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
+    return redirect(f'/question/{question_id}')
+
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def new_question():
@@ -60,7 +56,7 @@ def new_question():
         message = request.form['message']
         image = request.form['image']
         new_row = data_manager.transform_question_into_dictionary(title, message, image)
-        data_list = data_manager.add_new_row_to_data_list(new_row, data_manager.question_list)
+        data_list = data_manager.add_new_row_to_data_list(new_row, data_manager.get_question_list())
         connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
         return redirect('/')
 
