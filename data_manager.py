@@ -1,12 +1,22 @@
 import connection
 import util
+from operator import itemgetter
 
 
 def get_question_list():
-    return connection.get_all_data(connection.QUESTION_PATH)
+
+    data_list = connection.get_all_data(connection.QUESTION_PATH)
+    data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+
+    return data_list
+
 
 def get_answer_list():
-    return connection.get_all_data(connection.ANSWER_PATH)
+
+    data_list = connection.get_all_data(connection.ANSWER_PATH)
+    data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+
+    return data_list
 
 
 def get_single_question(question_id, question_list):

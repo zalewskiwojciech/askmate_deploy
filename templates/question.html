@@ -24,7 +24,8 @@
     </tr>
 </table>
 
-
+<br><br><br>
+<h2>--------------------ANSWERS----------------------</h2>
 {% if not all_answers %}
     <p>                         No answers for that question                                </p>
 
@@ -56,8 +57,10 @@
 
 </table>
 {%  endif %}
-<a href={{ url_for('new_answer', question_id = single_question['id']) }}>Add answer</a>
+<a href={{ url_for('new_answer', question_id = single_question['id']) }}>Add answer</a><br>
+<h2>---------------------------------------------------------</h2>
 <br><br><br><br>
+
 <h2><a href="/">HOME PAGE</a> </h2>
 </body>
 </html>
