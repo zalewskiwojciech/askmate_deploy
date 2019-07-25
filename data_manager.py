@@ -2,8 +2,6 @@ import connection
 import util
 
 
-question_list = connection.get_all_data(connection.QUESTION_PATH)
-answer_list = connection.get_all_data(connection.ANSWER_PATH)
 def get_question_list():
     return connection.get_all_data(connection.QUESTION_PATH)
 

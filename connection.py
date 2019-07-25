@@ -1,5 +1,6 @@
 import csv
 import os
+from operator import itemgetter
 
 QUESTION_PATH = os.getenv('QUESTION_PATH') if 'QUESTION_PATH' in os.environ else 'sample_data/question.csv'
 ANSWER_PATH = os.getenv('ANSWER_PATH') if 'ANSWER_PATH' in os.environ else 'sample_data/answer.csv'
@@ -14,7 +15,8 @@ def get_all_data(my_path):
         reader = csv.DictReader(csvfile, delimiter = ',')
         data_list = []
         for row in reader:
-            data_list.insert(0, dict(row))
+            data_list.append(dict(row))
+    data_list = sorted(data_list, key=itemgetter('id'), reverse=True)
     return data_list
 
 

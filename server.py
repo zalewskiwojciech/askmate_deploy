@@ -71,7 +71,7 @@ def new_answer(question_id):
         message = request.form['message']
         image = request.form['image']
         answer_in_dictionary_format = data_manager.transform_answer_into_dictionary(question_id, message, image)
-        data_to_export = data_manager.add_new_row_to_data_list(answer_in_dictionary_format, data_manager.answer_list)
+        data_to_export = data_manager.add_new_row_to_data_list(answer_in_dictionary_format, data_manager.get_answer_list())
         connection.export_all_data(connection.ANSWER_PATH, data_to_export, connection.ANSWER_HEADERS)
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)
