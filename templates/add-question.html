@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>
+    Add question
+</h1>
+
+
+
+  <form action="/add-question",  method="POST">
+      <p>
+            <label for="title">Title of question</label><br>
+            <input id="title"  name="title" rows="1" cols="20"><br>
+      </p>
+      <p>
+            <label for="message">Type question</label><br>
+          <textarea id="message" name="message"  rows="5" cols="200"></textarea><br>
+      </p>
+       <p>
+            <label for="image">Add image</label><br>
+          <textarea id="image" name="image"  rows="1" cols="80"></textarea><br>
+      </p>
+      <button type="submit">add question</button>
+  </form>
+
+</body>
+</html>
