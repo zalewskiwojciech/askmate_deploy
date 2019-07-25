@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-import data_manager, connection
+import data_manager, connection, util
 
 app = Flask(__name__)
 
@@ -39,18 +39,14 @@ def question_vote_down(question_id: int):
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
     connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
-    answer_list = data_manager.get_answer_list()
-    question_id = None
-    for answer in answer_list:
-        if answer['id'] == answer_id:
-            question_id = answer['question_id']
-            break
+    question_id = util.find_question_id_from_answer_id(answer_id)
     return redirect(f'/question/{question_id}')
 
 
 @app.route('/answer/vote_down/<answer_id>')
 def answer_vote_down(answer_id: int):
     connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
+    question_id = util.find_question_id_from_answer_id(answer_id)
     return redirect(f'/question/{question_id}')
 
 
