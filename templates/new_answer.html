@@ -6,9 +6,10 @@
 </head>
 <body>
     <form action="/question/{{question_id}}/new_answer" method="post">
-        <label for="message">Type your answer here</label>
-        <textarea id="message" name="message" rows="8" cols="80"></textarea>
-        <textarea id="image" name="image" rows="1" cols="80"></textarea>
+        <label for="message">Type your answer here</label><br>
+        <textarea id="message" name="message" rows="8" cols="80"></textarea><br>
+        <label for="image">Image file</label><br>
+        <textarea id="image" name="image" rows="1" cols="80"></textarea><br>
         <button type="submit">Save the answer</button>
     </form>
 </body>
