@@ -19,8 +19,14 @@
 
         {% endfor %}
 
-         <a href="{{url_for('question_vote_up', question_id=single_question['id'])}}">Vote this question up</a>
-         <a href="{{url_for('question_vote_down', question_id=single_question['id'])}}">Vote this question down</a>
+
+        <a href="{{url_for('question_vote_up', question_id=single_question['id'])}}">
+   <input type="button" value="vote this question up" />
+        </a>
+        <a href="{{url_for('question_vote_down', question_id=single_question['id'])}}">
+   <input type="button" value="vote this question down" />
+        </a>
+
     </tr>
 </table>
 
@@ -48,8 +54,12 @@
         {% for field in single_answer.values() %}
                <td>{{ field }}</td>
         {% endfor %}
-            <td> <a href="{{url_for('answer_vote_up', answer_id=single_answer['id'])}}">Vote this answer up</a> </td>
-            <td> <a href="{{url_for('answer_vote_down', answer_id=single_answer['id'])}}">Vote this answer down</a> </td>
+           <td> <a href="{{url_for('answer_vote_up', answer_id=single_answer['id'])}}">
+   <input type="button" value="vote this question up" />
+        </a> </td>
+        <td> <a href="{{url_for('answer_vote_up', answer_id=single_answer['id'])}}">
+   <input type="button" value="vote this question down" />
+        </a> </td>
 
     </tr>
         {% endfor %}
