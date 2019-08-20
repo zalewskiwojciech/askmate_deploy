@@ -14,8 +14,8 @@ def show_list():
 
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
-    single_question=data_manager.get_single_question(question_id, data_manager.get_question_list())
-    answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id, data_manager.get_answer_list())
+    single_question=data_manager.get_single_question(question_id)
+    answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
 
     return render_template('question.html',
                            question_id=question_id,
@@ -57,7 +57,7 @@ def new_question():
         message = request.form['message']
         image = request.form['image']
         new_row = data_manager.transform_question_into_dictionary(title, message, image)
-        data_list = data_manager.add_new_row_to_data_list(new_row, data_manager.get_question_list())
+        data_list = data_manager.add_new_row_to_question_list(new_row)
         connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
         return redirect('/')
 
@@ -71,7 +71,7 @@ def new_answer(question_id):
         message = request.form['message']
         image = request.form['image']
         answer_in_dictionary_format = data_manager.transform_answer_into_dictionary(question_id, message, image)
-        data_to_export = data_manager.add_new_row_to_data_list(answer_in_dictionary_format, data_manager.get_answer_list())
+        data_to_export = data_manager.add_new_row_to_answer_list(answer_in_dictionary_format)
         connection.export_all_data(connection.ANSWER_PATH, data_to_export, connection.ANSWER_HEADERS)
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)

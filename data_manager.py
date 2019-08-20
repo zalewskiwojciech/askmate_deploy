@@ -1,37 +1,67 @@
 import connection
 import util
 from operator import itemgetter
+import connection_with_database
 
+@connection_with_database.connection_handler
+def get_question_list(cursor):
 
-def get_question_list():
+    cursor.execute("""
+                        SELECT * FROM question
+                        ORDER BY question.id DESC 
+    """)
 
-    data_list = connection.get_all_data(connection.QUESTION_PATH)
-    data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+    data_list = cursor.fetchall()
+
+    #data_list = connection.get_all_data(connection.QUESTION_PATH)
+    #data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
 
     return data_list
 
+@connection_with_database.connection_handler
+def get_answer_list(cursor):
 
-def get_answer_list():
-
-    data_list = connection.get_all_data(connection.ANSWER_PATH)
-    data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+    cursor.execute("""
+                        SELECT * FROM answer
+                        ORDER BY answer.id
+    """)
+    # data_list = connection.get_all_data(connection.ANSWER_PATH)
+    # data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+    data_list = cursor.fetchall()
 
     return data_list
 
+@connection_with_database.connection_handler
+def get_single_question(cursor, question_id):
 
-def get_single_question(question_id, question_list):
+    cursor.execute("""
+                        SELECT * FROM question    
+                        WHERE %(question_id)s = id
+    """, {'question_id': question_id})
 
-    for question in question_list:
-        if question['id'] == question_id:
-            return question
+    question = cursor.fetchall()
 
-def get_all_answers_for_single_question (question_id, answer_list):
+    # for question in question_list:
+        # if question['id'] == question_id:
+    return question
 
-    all_answers_for_single_question=[]
 
-    for answer in answer_list:
-        if answer['question_id'] == question_id:
-            all_answers_for_single_question.append(answer)
+@connection_with_database.connection_handler
+def get_all_answers_for_single_question (cursor, question_id):
+
+    cursor.execute("""
+                        SELECT * FROM answer
+                        WHERE question_id = %(question_id)s
+    """, {'question_id': question_id})
+
+    # all_answers_for_single_question=[]
+
+    # for answer in answer_list:
+        # if answer['question_id'] == question_id:
+            # all_answers_for_single_question.append(answer)
+    # if len(all_answers_for_single_question) == 0:
+        # return False
+    all_answers_for_single_question = cursor.fetchall()
     if len(all_answers_for_single_question) == 0:
         return False
     return all_answers_for_single_question
@@ -59,9 +89,24 @@ def transform_question_into_dictionary(title, message, image):
     return question
 
 
+@connection_with_database.connection_handler
+def add_new_row_to_question_list(cursor, new_row):
+    cursor.execute("""
+                        INSERT INTO question
+                        VALUES (%s,%s,%s,%s,%s,%s)
+    """, {'new_row': new_row})
+    # data_list.append(new_row)
+    data_list = cursor.fetchall()
+    return data_list
 
-def add_new_row_to_data_list(new_row, data_list):
 
-    data_list.append(new_row)
+@connection_with_database.connection_handler
+def add_new_row_to_answer_list(cursor, new_row):
+    cursor.execute("""
+                        INSERT INTO answer
+                        VALUES (%s,%s,%s,%s,%s)
+    """, {'new_row': new_row})
+    # data_list.append(new_row)
+    data_list = cursor.fetchall()
     return data_list
 
