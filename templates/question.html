@@ -14,8 +14,8 @@
     </tr>
 
     <tr>
-        {% for field in single_question.values() %}
-             <td>{{ field }}</td>
+        {% for field in single_question %}
+             <td>{{ field.id }}</td><td> {{field.submission_time}}</td> <td>{{field.view_number}}</td><td>{{field.vote_number}}</td><td>{{field.title}}</td><td>{{field.message}}</td><td>{{field.image}}</td>
 
         {% endfor %}
 
@@ -47,22 +47,21 @@
         {% endfor %}
 
     </tr>
-        {% for single_answer in all_answers %}
-    <tr>
 
 
-        {% for field in single_answer.values() %}
-               <td>{{ field }}</td>
-        {% endfor %}
-           <td> <a href="{{url_for('answer_vote_up', answer_id=single_answer['id'])}}">
-   <input type="button" value="vote this question up" />
-        </a> </td>
-        <td> <a href="{{url_for('answer_vote_down', answer_id=single_answer['id'])}}">
-   <input type="button" value="vote this question down" />
-        </a> </td>
+        {% for field in all_answers %}
+         <tr>
+                <td>{{field.id}}</td>
+                <td>{{field.submission_time}}</td>
+                <td>{{field.vote_number}}</td>
+                <td>{{field.question_id}}</td>
+                <td>{{field.message}}</td>
+                <td>{{field.image}}</td>
+
+
 
     </tr>
-        {% endfor %}
+    {% endfor %}
 </table>
 
 </table>
