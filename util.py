@@ -1,4 +1,5 @@
-import time
+
+from datetime import datetime
 import data_manager
 
 def find_biggest_answer_id(answer_list):
@@ -13,7 +14,7 @@ def find_biggest_answer_id(answer_list):
 
 def calculate_timestamp():
 
-    dt_object = int(time.time())
+    dt_object = datetime.now()
     return dt_object
 
 

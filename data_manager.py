@@ -79,6 +79,7 @@ def transform_answer_into_dictionary(question_id, message, image):
 
 def transform_question_into_dictionary(title, message, image):
     question = {}
+    #question = [util.calculate_timestamp(), 0,0, title, message, image]
     question['id'] = len(get_question_list())
     question['submission_time'] = util.calculate_timestamp()
     question['view_number'] = 0
@@ -91,13 +92,22 @@ def transform_question_into_dictionary(title, message, image):
 
 @connection_with_database.connection_handler
 def add_new_row_to_question_list(cursor, new_row):
+    #print(new_row)
     cursor.execute("""
-                        INSERT INTO question
-                        VALUES (%s,%s,%s,%s,%s,%s)
-    """, {'new_row': new_row})
-    # data_list.append(new_row)
-    data_list = cursor.fetchall()
-    return data_list
+                        INSERT INTO question ( 
+                        submission_time,
+                        view_number, 
+                        vote_number, 
+                        title, 
+                        message, 
+                        image)
+                        VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s);
+    """, {'submission_time' : new_row['submission_time'],
+          'view_number' : new_row['view_number'],
+          'vote_number' : new_row['vote_number'],
+          'title' : new_row['title'],
+          'message' : new_row['message'],
+          'image' : new_row['image']})
 
 
 @connection_with_database.connection_handler
