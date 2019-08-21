@@ -19,10 +19,10 @@ def calculate_timestamp():
 
 
 def find_question_id_from_answer_id(answer_id):
-    answer_list = data_manager.get_answer_list()
+    answer_list = data_manager.get_question_id_from_answer_id(answer_id)
     question_id = None
     for answer in answer_list:
-        if answer['id'] == answer_id:
+        if answer == answer_id:
             question_id = answer['question_id']
             break
     return question_id

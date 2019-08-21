@@ -58,7 +58,12 @@
                 <td>{{field.message}}</td>
                 <td>{{field.image}}</td>
 
-
+             <td> <a href="{{url_for('answer_vote_up', answer_id=question_id)}}">
+<input type="button" value="vote this question up" />
+</a> </td>
+<td> <a href="{{url_for('answer_vote_down', answer_id=question_id)}}">
+<input type="button" value="vote this question down" />
+</a> </td>
 
     </tr>
     {% endfor %}
@@ -66,7 +71,7 @@
 
 </table>
 {%  endif %}
-<a href={{ url_for('new_answer', question_id = single_question['id']) }}>Add answer</a><br>
+<a href={{ url_for('new_answer', question_id = question_id) }}>Add answer</a><br>
 <h2>---------------------------------------------------------</h2>
 <br><br><br><br>
 

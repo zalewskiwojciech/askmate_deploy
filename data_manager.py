@@ -4,6 +4,22 @@ from operator import itemgetter
 import connection_with_database
 
 @connection_with_database.connection_handler
+def get_question_id_from_answer_id(cursor, answer_id):
+
+    cursor.execute("""
+                            SELECT question_id FROM answer
+                            WHERE question_id  BY question.id DESC 
+        """)
+
+    data_list = cursor.fetchall()
+
+    # data_list = connection.get_all_data(connection.QUESTION_PATH)
+    # data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+
+    return data_list
+
+
+@connection_with_database.connection_handler
 def get_question_list(cursor):
 
     cursor.execute("""

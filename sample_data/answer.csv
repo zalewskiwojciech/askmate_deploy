@@ -21,7 +21,7 @@ id,submission_time,vote_number,question_id,message,image
 8,0,6,2,gadsaegsdz,sefdagsd
 7,0,5,2,Bogdan,Wojtek
 6,1564043634,0,0,answer,image
-5,1564043745,0,0,witam,serdecznie
+5,1564043745,1,0,witam,serdecznie
 4,1564043855,4,0,joł,hello
 3,1564044445,3,0,dwa,razy
 2,1564044755,0,0,qeweqwq,eqwqweeqw
