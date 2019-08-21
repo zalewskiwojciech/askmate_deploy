@@ -71,9 +71,11 @@ def new_answer(question_id):
     if request.method == 'POST':
         message = request.form['message']
         image = request.form['image']
-        answer_in_dictionary_format = data_manager.transform_answer_into_dictionary(question_id, message, image)
-        data_to_export = data_manager.add_new_row_to_answer_list(answer_in_dictionary_format)
-        connection.export_all_data(connection.ANSWER_PATH, data_to_export, connection.ANSWER_HEADERS)
+        #answer_in_dictionary_format = data_manager.transform_answer_into_dictionary(question_id, message, image)
+        #data_to_export = data_manager.add_new_row_to_answer_list(answer_in_dictionary_format)
+        #connection.export_all_data(connection.ANSWER_PATH, data_to_export, connection.ANSWER_HEADERS)
+        new_row = data_manager.transform_answer_into_dictionary(question_id, message, image)
+        data_manager.add_new_row_to_answer_list(new_row)
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)
 

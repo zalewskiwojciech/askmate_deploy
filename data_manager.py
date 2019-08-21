@@ -101,7 +101,13 @@ def add_new_row_to_question_list(cursor, new_row):
                         title, 
                         message, 
                         image)
-                        VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s);
+                        VALUES (
+                        %(submission_time)s,
+                        %(view_number)s,
+                        %(vote_number)s,
+                        %(title)s,
+                        %(message)s,
+                        %(image)s);
     """, {'submission_time' : new_row['submission_time'],
           'view_number' : new_row['view_number'],
           'vote_number' : new_row['vote_number'],
@@ -113,10 +119,22 @@ def add_new_row_to_question_list(cursor, new_row):
 @connection_with_database.connection_handler
 def add_new_row_to_answer_list(cursor, new_row):
     cursor.execute("""
-                        INSERT INTO answer
-                        VALUES (%s,%s,%s,%s,%s)
-    """, {'new_row': new_row})
-    # data_list.append(new_row)
-    data_list = cursor.fetchall()
-    return data_list
+                        INSERT INTO answer( 
+                        submission_time, 
+                        vote_number, 
+                        question_id, 
+                        message, 
+                        image)
+                        VALUES (
+                        %(submission_time)s,
+                        %(vote_number)s,
+                        %(question_id)s,
+                        %(message)s,
+                        %(image)s);
+    """, {'submission_time': new_row['submission_time'],
+          'vote_number': new_row['vote_number'],
+          'question_id': new_row['question_id'],
+          'message': new_row['message'],
+          'image': new_row['image']})# data_list.append(new_row)
+
 
