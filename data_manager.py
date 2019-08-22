@@ -48,6 +48,31 @@ def update_vote_down(cursor, answer_id):
                     """,
                     {'answer_id': answer_id})
 
+@connection_with_database.connection_handler
+def get_search_results_list(cursor, search_phrase):
+
+    cursor.execute("""
+                            SELECT question_id FROM answer
+                            WHERE message IN %(search_phrase)s
+                            ; 
+        """)
+
+    answer_id_list = cursor.fetchall()
+
+    cursor.execute("""
+                        SELECT id FROM question
+                        WHERE message IN %(search_phrase)s or message IN %(answer_id_list)s
+                        ; 
+    """, {'search_phrase' : search_phrase, 'answer_id_list': answer_id_list})
+
+    complete_questions_id_list = cursor.fetchall()
+
+    #data_list = connection.get_all_data(connection.QUESTION_PATH)
+    #data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+
+    return complete_questions_id_list
+
+
 
 @connection_with_database.connection_handler
 def get_question_list(cursor):
