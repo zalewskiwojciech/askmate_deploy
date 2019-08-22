@@ -107,7 +107,8 @@ def search_question_list(cursor, search_phrase):
                                                             (SELECT question_id FROM answer
                                                             WHERE message LIKE %(search_phrase)s) OR 
                                                             message LIKE %(search_phrase)s OR
-                                                            title LIKE %(search_phrase)s;
+                                                            title LIKE %(search_phrase)s
+                        ORDER BY question.id DESC;
                                                             
 
     """, {'search_phrase' : search_phrase})
