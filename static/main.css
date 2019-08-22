@@ -1,4 +1,9 @@
 
+#question_title {
+    font-weight: bolder;
+    font-family: Damascus;
+}
+
 
 #myheader {
     background-color: #008e9d;
@@ -16,9 +21,7 @@ body {
     padding: 10%;
 }
 
-a:hover {
-  background: orange;
-}
+
 
 p {
     background-color: #008e9d;
@@ -29,18 +32,16 @@ p {
 
 
 table, tr, th {
-    background-color:lightgrey;
+    background-color:darkorange;
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
     vertical-align: center;
     padding : 5px;
-    width:30%;
 }
 
 td {
     border: 1px solid black;
-    width: 50%;
 }
 ol {
     border: 1px solid black;
