@@ -1,6 +1,7 @@
     {% extends "layout.html" %}
 
     {% block content %}
+
     <a href="/"> <img src="/static/images/znak_zapytania.png" height="100px"> </a><br>
     <table>
         <tr>
@@ -10,16 +11,34 @@
         </tr>
         {% for question in complete_questions_search_list %}
 
+
+    {% if len_list > 0 %}
+
+        <table>
             <tr>
-                {% for item in question.values() %}
-                    {% if item == question['title'] %}
-                        <td><a href="{{url_for('show_search_result', question_id=question['id'])}}"> {{ item }} </a></td>
-                    {% else %}
-                        <td>{{ item }}</td>
-                    {% endif %}
+                {% for header in QUESTION_HEADERS %}
+                    <th>{{header}}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
-    </table>
+
+
+                {% for question in complete_questions_search_list %}
+
+                    <tr>
+                        {% for item in question.values() %}
+                            {% if item == question['title'] %}
+                                <td><a href="{{url_for('show_search_result', question_id=question['id'])}}"> {{ item }} </a></td>
+                            {% else %}
+                                <td>{{ item }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+        </table>
+    {% else %}
+        <p>No relults</p>
+    {% endif %}
+
 
     {% endblock %}

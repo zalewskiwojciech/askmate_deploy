@@ -22,8 +22,8 @@ def show_search_result():
         # search_result_answers = data_manager.search_question_id_from_answers(search_phrase)
         # search_result = (search_result_questions) + (search_result_answers)
         complete_questions_search_list = data_manager.search_question_list(search_phrase)
-
-        return render_template('search_result.html', complete_questions_search_list=complete_questions_search_list,  QUESTION_HEADERS = connection.QUESTION_HEADERS)
+        len_list = len(complete_questions_search_list)
+        return render_template('search_result.html', len_list=len_list, complete_questions_search_list=complete_questions_search_list,  QUESTION_HEADERS = connection.QUESTION_HEADERS)
 
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
