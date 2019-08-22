@@ -74,31 +74,58 @@ def update_answer_vote_down(cursor, answer_id):
                     """,
                     {'answer_id': answer_id})
 
+# @connection_with_database.connection_handler
+# def search_question_id_from_answers(cursor, search_phrase):
+#
+#     cursor.execute("""
+#                         SELECT question_id FROM answer
+#                         WHERE message LIKE %(search_phrase)s
+#                         ;
+#        """, {'search_phrase': search_phrase})
+#
+#     complete_questions_search_id_from_answers=cursor.fetchall()
+#     return complete_questions_search_id_from_answers
+#
+# @connection_with_database.connection_handler
+# def search_question_id_from_questions(cursor, search_phrase):
+#
+#
+#     cursor.execute("""
+#                         SELECT id FROM question
+#                         WHERE message LIKE %(search_phrase)s OR title LIKE %(search_phrase)s
+#                         ;
+#     """, {'search_phrase' : search_phrase})
+#
+#     complete_questions_search_id_from_questions = cursor.fetchall()
+#     return complete_questions_search_id_from_questions
+#
+
 @connection_with_database.connection_handler
-def get_search_results_list(cursor, search_phrase):
-
-#    cursor.execute("""
-#                            SELECT question_id FROM answer
-#                            WHERE message LIKE %(search_phrase)s
-#                            ;
-#       """, {'search_phrase': search_phrase})
-
-#    answer_id_list = cursor.fetchall()   id = %(answer_id_list)s OR    , 'answer_id_list': answer_id_list
-
+def search_question_list(cursor, search_phrase):
     cursor.execute("""
-                        SELECT * FROM question
-                        WHERE message LIKE %(search_phrase)s OR title LIKE %(search_phrase)s
-                        ; 
+                        SELECT * FROM question WHERE id IN 
+                                                            (SELECT question_id FROM answer
+                                                            WHERE message LIKE %(search_phrase)s) OR 
+                                                            message LIKE %(search_phrase)s OR
+                                                            title LIKE %(search_phrase)s;
+                                                            
+
     """, {'search_phrase' : search_phrase})
 
-    complete_questions_id_list = cursor.fetchall()
-
-    #data_list = connection.get_all_data(connection.QUESTION_PATH)
-    #data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
-
-    return complete_questions_id_list
+    complete_questions_search_list = cursor.fetchall()
+    return complete_questions_search_list
 
 
+
+    # cursor.execute("""
+    #                     SELECT * FROM question
+    #                     WHERE id IN (%(question_id))
+    #                     ;
+    # """, {'question_id' : question_id})
+    #
+    # complete_questions_search_list = cursor.fetchall()
+    # return complete_questions_search_list
+    #
 
 @connection_with_database.connection_handler
 def get_question_list(cursor):

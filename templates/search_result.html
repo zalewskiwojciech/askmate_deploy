@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+    {% extends "layout.html" %}
 
+    {% block content %}
 
     <table>
         <tr>
@@ -9,7 +8,7 @@
                 <th>{{header}}</th>
             {% endfor %}
         </tr>
-        {% for question in search_result %}
+        {% for question in complete_questions_search_list %}
 
             <tr>
                 {% for item in question.values() %}
@@ -23,7 +22,4 @@
         {% endfor %}
     </table>
 
-
-
-</body>
-</html>
+    {% endblock %}

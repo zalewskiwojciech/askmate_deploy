@@ -18,9 +18,12 @@ def show_list():
 def show_search_result():
     if request.method=='POST':
         search_phrase = f'%{request.form["search"]}%'
-        search_result = data_manager.get_search_results_list(search_phrase)
+        # search_result_questions = data_manager.search_question_id_from_questions(search_phrase)
+        # search_result_answers = data_manager.search_question_id_from_answers(search_phrase)
+        # search_result = (search_result_questions) + (search_result_answers)
+        complete_questions_search_list = data_manager.search_question_list(search_phrase)
 
-        return render_template('search_result.html', search_result=search_result)
+        return render_template('search_result.html', complete_questions_search_list=complete_questions_search_list,  QUESTION_HEADERS = connection.QUESTION_HEADERS)
 
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
