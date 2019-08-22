@@ -27,20 +27,22 @@ def show_question_and_answers(question_id: int):
 
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
-    connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    data_manager.update_question_vote_up(question_id)
     return redirect(f'/question/{question_id}')
 
 
 @app.route('/question/vote_down/<question_id>')
 def question_vote_down(question_id: int):
-    connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
+    # connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
+    data_manager.update_question_vote_down(question_id)
     return redirect(f'/question/{question_id}')
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
     #connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
-    data_manager.update_vote_up(answer_id)
+    data_manager.update_answer_vote_up(answer_id)
 
     return redirect(f'/question/{question_id}')
 
@@ -49,7 +51,7 @@ def answer_vote_up(answer_id: int):
 def answer_vote_down(answer_id: int):
     #connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
-    data_manager.update_vote_down(answer_id)
+    data_manager.update_answer_vote_down(answer_id)
 
     return redirect(f'/question/{question_id}')
 

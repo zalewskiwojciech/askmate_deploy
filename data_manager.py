@@ -25,7 +25,33 @@ def get_question_id_from_answer_id(cursor, answer_id):
 
 
 @connection_with_database.connection_handler
-def update_vote_up(cursor, answer_id):
+def update_question_vote_up(cursor, question_id):
+
+
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id': question_id})
+
+
+
+@connection_with_database.connection_handler
+def update_question_vote_down(cursor, question_id):
+
+
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(question_id)s AND vote_number > 0
+                    """,
+                   {'question_id': question_id})
+
+
+
+@connection_with_database.connection_handler
+def update_answer_vote_up(cursor, answer_id):
 
 
     cursor.execute("""
@@ -39,12 +65,12 @@ def update_vote_up(cursor, answer_id):
 
 
 @connection_with_database.connection_handler
-def update_vote_down(cursor, answer_id):
+def update_answer_vote_down(cursor, answer_id):
 
     cursor.execute("""
                     UPDATE answer
                     SET vote_number = vote_number - 1
-                    WHERE id = %(answer_id)s;
+                    WHERE id = %(answer_id)s AND vote_number > 0;
                     """,
                     {'answer_id': answer_id})
 
@@ -97,7 +123,8 @@ def get_all_answers_for_single_question (cursor, question_id):
 
     cursor.execute("""
                         SELECT * FROM answer
-                        WHERE question_id = %(question_id)s;
+                        WHERE question_id = %(question_id)s
+                        ORDER BY answer.id;
     """, {'question_id': question_id})
 
     # all_answers_for_single_question=[]
