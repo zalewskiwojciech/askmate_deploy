@@ -3,12 +3,17 @@
 <body>
 
 
-   <h1>Search</h1>
 
-        <form action="/search_result">
 
-            <input type="text" name="search_result" value="Search_for...">
-             <input type="submit" value="Submit"><br><br>
+        <form action="/search_result", method="POST">
+
+            <p>
+                <label for="search_result">Search</label><br>
+                <textarea id="search" name="search" rows="1" cols="50"></textarea>
+
+                <input type="submit" value="Submit">
+                <br><br>
+            </p>
         </form>
 
     <table>

@@ -12,6 +12,16 @@ def show_list():
                            question_list = data_manager.get_question_list(),
                            QUESTION_HEADERS = connection.QUESTION_HEADERS)
 
+
+
+@app.route('/search_result', methods=['POST'])
+def show_search_result():
+    if request.method=='POST':
+        search_phrase = f'%{request.form["search"]}%'
+        search_result = data_manager.get_search_results_list(search_phrase)
+
+        return render_template('search_result.html', search_result=search_result)
+
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id)

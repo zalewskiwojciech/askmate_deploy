@@ -51,19 +51,19 @@ def update_vote_down(cursor, answer_id):
 @connection_with_database.connection_handler
 def get_search_results_list(cursor, search_phrase):
 
-    cursor.execute("""
-                            SELECT question_id FROM answer
-                            WHERE message IN %(search_phrase)s
-                            ; 
-        """)
+#    cursor.execute("""
+#                            SELECT question_id FROM answer
+#                            WHERE message LIKE %(search_phrase)s
+#                            ;
+#       """, {'search_phrase': search_phrase})
 
-    answer_id_list = cursor.fetchall()
+#    answer_id_list = cursor.fetchall()   id = %(answer_id_list)s OR    , 'answer_id_list': answer_id_list
 
     cursor.execute("""
-                        SELECT id FROM question
-                        WHERE message IN %(search_phrase)s or message IN %(answer_id_list)s
+                        SELECT * FROM question
+                        WHERE message LIKE %(search_phrase)s OR title LIKE %(search_phrase)s
                         ; 
-    """, {'search_phrase' : search_phrase, 'answer_id_list': answer_id_list})
+    """, {'search_phrase' : search_phrase})
 
     complete_questions_id_list = cursor.fetchall()
 
