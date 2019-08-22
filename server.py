@@ -26,7 +26,6 @@ def show_search_result():
 def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id)
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
-
     return render_template('question.html',
                            question_id=question_id,
                            single_question=single_question,
@@ -37,20 +36,22 @@ def show_question_and_answers(question_id: int):
 
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
-    connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    data_manager.update_question_vote_up(question_id)
     return redirect(f'/question/{question_id}')
 
 
 @app.route('/question/vote_down/<question_id>')
 def question_vote_down(question_id: int):
-    connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
+    # connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
+    data_manager.update_question_vote_down(question_id)
     return redirect(f'/question/{question_id}')
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
     #connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
-    data_manager.update_vote_up(answer_id)
+    data_manager.update_answer_vote_up(answer_id)
 
     return redirect(f'/question/{question_id}')
 
@@ -59,7 +60,7 @@ def answer_vote_up(answer_id: int):
 def answer_vote_down(answer_id: int):
     #connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
-    data_manager.update_vote_down(answer_id)
+    data_manager.update_answer_vote_down(answer_id)
 
     return redirect(f'/question/{question_id}')
 
@@ -93,7 +94,10 @@ def new_answer(question_id):
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)
 
-
+@app.route('/question/view_up/<question_id>')
+def question_view_up(question_id: int):
+    data_manager.update_view_number_up(question_id)
+    return redirect(f'/question/{question_id}')
 
 
 if __name__ == '__main__':

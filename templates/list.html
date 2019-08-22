@@ -1,7 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+    {% extends "layout.html" %}
 
+    {% block content %}
+
+
+    <h1>Search</h1>
 
 
 
@@ -27,7 +29,7 @@
             <tr>
                 {% for item in question.values() %}
                     {% if item == question['title'] %}
-                        <td><a href="{{url_for('show_question_and_answers', question_id=question['id'])}}"> {{ item }} </a></td>
+                        <td><a href="{{url_for('question_view_up', question_id=question['id'])}}"> {{ item }} </a></td>
                     {% else %}
                         <td>{{ item }}</td>
                     {% endif %}
@@ -38,5 +40,4 @@
 
     <h1><a href="/add-question">Add new question</a></h1>
 
-</body>
-</html>
+    {% endblock %}

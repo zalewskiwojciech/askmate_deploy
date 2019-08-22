@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends "layout.html" %}
+
+{% block content %}
+
 <body>
 
 <table>
@@ -20,10 +18,10 @@
         {% endfor %}
 
 
-        <a href="{{url_for('question_vote_up', question_id=single_question['id'])}}">
+        <a href="{{url_for('question_vote_up', question_id=question_id)}}">
    <input type="button" value="vote this question up" />
         </a>
-        <a href="{{url_for('question_vote_down', question_id=single_question['id'])}}">
+        <a href="{{url_for('question_vote_down', question_id=question_id)}}">
    <input type="button" value="vote this question down" />
         </a>
 
@@ -45,7 +43,6 @@
         {% for header in ANSWER_HEADERS %}
             <th>{{header}}</th>
         {% endfor %}
-
     </tr>
 
 
@@ -59,10 +56,10 @@
                 <td>{{field.image}}</td>
 
              <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
-<input type="button" value="vote this question up" />
+<input type="button" value="vote this answer up" />
 </a> </td>
 <td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
-<input type="button" value="vote this question down" />
+<input type="button" value="vote this answer down" />
 </a> </td>
 
     </tr>
@@ -77,4 +74,5 @@
 
 <h2><a href="/">HOME PAGE</a> </h2>
 </body>
-</html>
+
+{% endblock %}
