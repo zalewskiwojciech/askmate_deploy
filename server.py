@@ -38,15 +38,19 @@ def question_vote_down(question_id: int):
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
-    connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
-    question_id = util.find_question_id_from_answer_id(answer_id)
+    #connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
+    question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
+    data_manager.update_vote_up(answer_id)
+
     return redirect(f'/question/{question_id}')
 
 
 @app.route('/answer/vote_down/<answer_id>')
 def answer_vote_down(answer_id: int):
-    connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
-    question_id = util.find_question_id_from_answer_id(answer_id)
+    #connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
+    question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
+    data_manager.update_vote_down(answer_id)
+
     return redirect(f'/question/{question_id}')
 
 

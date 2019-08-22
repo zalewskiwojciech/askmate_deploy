@@ -3,20 +3,50 @@ import util
 from operator import itemgetter
 import connection_with_database
 
+
 @connection_with_database.connection_handler
 def get_question_id_from_answer_id(cursor, answer_id):
-
     cursor.execute("""
-                            SELECT question_id FROM answer
-                            WHERE question_id  BY question.id DESC 
-        """)
+                        SELECT question_id FROM answer
+                        WHERE id = %(answer_id)s;
+                        """,
+                       {'answer_id': answer_id})
 
-    data_list = cursor.fetchall()
+
+    question_id_from_answer_id = cursor.fetchall()
 
     # data_list = connection.get_all_data(connection.QUESTION_PATH)
     # data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
 
-    return data_list
+    return question_id_from_answer_id
+
+    # data_list = connection.get_all_data(connection.QUESTION_PATH)
+    # data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
+
+
+@connection_with_database.connection_handler
+def update_vote_up(cursor, answer_id):
+
+
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                    {'answer_id': answer_id})
+
+
+
+
+@connection_with_database.connection_handler
+def update_vote_down(cursor, answer_id):
+
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                    {'answer_id': answer_id})
 
 
 @connection_with_database.connection_handler
@@ -24,7 +54,7 @@ def get_question_list(cursor):
 
     cursor.execute("""
                         SELECT * FROM question
-                        ORDER BY question.id DESC 
+                        ORDER BY question.id DESC; 
     """)
 
     data_list = cursor.fetchall()
@@ -39,7 +69,7 @@ def get_answer_list(cursor):
 
     cursor.execute("""
                         SELECT * FROM answer
-                        ORDER BY answer.id
+                        ORDER BY answer.id;
     """)
     # data_list = connection.get_all_data(connection.ANSWER_PATH)
     # data_list = sorted(data_list, key=lambda x: int(itemgetter('id')(x)), reverse=True)
@@ -52,14 +82,14 @@ def get_single_question(cursor, question_id):
 
     cursor.execute("""
                         SELECT * FROM question    
-                        WHERE %(question_id)s = id
+                        WHERE  id = %(question_id)s;
     """, {'question_id': question_id})
 
-    question = cursor.fetchall()
+    single_question = cursor.fetchall()
 
     # for question in question_list:
         # if question['id'] == question_id:
-    return question
+    return single_question
 
 
 @connection_with_database.connection_handler
@@ -67,7 +97,7 @@ def get_all_answers_for_single_question (cursor, question_id):
 
     cursor.execute("""
                         SELECT * FROM answer
-                        WHERE question_id = %(question_id)s
+                        WHERE question_id = %(question_id)s;
     """, {'question_id': question_id})
 
     # all_answers_for_single_question=[]

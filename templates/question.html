@@ -58,10 +58,10 @@
                 <td>{{field.message}}</td>
                 <td>{{field.image}}</td>
 
-             <td> <a href="{{url_for('answer_vote_up', answer_id=question_id)}}">
+             <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
 <input type="button" value="vote this question up" />
 </a> </td>
-<td> <a href="{{url_for('answer_vote_down', answer_id=question_id)}}">
+<td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
 <input type="button" value="vote this question down" />
 </a> </td>
 
