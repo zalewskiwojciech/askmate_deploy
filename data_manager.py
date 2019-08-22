@@ -236,3 +236,15 @@ def add_new_row_to_answer_list(cursor, new_row):
           'image': new_row['image']})# data_list.append(new_row)
 
 
+@connection_with_database.connection_handler
+def update_view_number_up(cursor, question_id):
+
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE %(question_id)s = question.id;
+    
+    
+                    """,
+                   {'question_id': question_id})
+

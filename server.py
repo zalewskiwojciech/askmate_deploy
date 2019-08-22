@@ -16,7 +16,6 @@ def show_list():
 def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id)
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
-
     return render_template('question.html',
                            question_id=question_id,
                            single_question=single_question,
@@ -85,7 +84,10 @@ def new_answer(question_id):
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)
 
-
+@app.route('/question/view_up/<question_id>')
+def question_view_up(question_id: int):
+    data_manager.update_view_number_up(question_id)
+    return redirect(f'/question/{question_id}')
 
 
 if __name__ == '__main__':
