@@ -29,7 +29,8 @@
             <tr>
                 {% for item in question.values() %}
                     {% if item == question['title'] %}
-                        <td><a href="{{url_for('question_view_up', question_id=question['id'])}}"> {{ item }} </a></td>
+                        <td><a id="question_title" href="{{url_for('question_view_up', question_id=question['id'])}}"> {{ item }} </a></td>
+
                     {% else %}
                         <td>{{ item }}</td>
                     {% endif %}
