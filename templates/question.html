@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends "layout.html" %}
+
+{% block content %}
+
 <body>
 
 <table>
@@ -45,7 +43,6 @@
         {% for header in ANSWER_HEADERS %}
             <th>{{header}}</th>
         {% endfor %}
-
     </tr>
 
 
@@ -77,4 +74,5 @@
 
 <h2><a href="/">HOME PAGE</a> </h2>
 </body>
-</html>
+
+{% endblock %}
