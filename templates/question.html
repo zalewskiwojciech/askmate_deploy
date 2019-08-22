@@ -20,10 +20,10 @@
         {% endfor %}
 
 
-        <a href="{{url_for('question_vote_up', question_id=single_question['id'])}}">
+        <a href="{{url_for('question_vote_up', question_id=question_id)}}">
    <input type="button" value="vote this question up" />
         </a>
-        <a href="{{url_for('question_vote_down', question_id=single_question['id'])}}">
+        <a href="{{url_for('question_vote_down', question_id=question_id)}}">
    <input type="button" value="vote this question down" />
         </a>
 
@@ -59,10 +59,10 @@
                 <td>{{field.image}}</td>
 
              <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
-<input type="button" value="vote this question up" />
+<input type="button" value="vote this answer up" />
 </a> </td>
 <td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
-<input type="button" value="vote this question down" />
+<input type="button" value="vote this answer down" />
 </a> </td>
 
     </tr>
