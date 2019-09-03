@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>add_answer</title>
+</head>
+<body>
+    <form action="/question/{{question_id}}/add_comment_to_question" method="post">
+        <label for="message">Type your answer here</label><br>
+        <textarea id="message" name="message" rows="8" cols="80"></textarea><br>
+        <button type="submit">Save the answer</button>
+    </form>
+</body>
+
+    <h2><a href="/">HOME PAGE</a> </h2>
+
+{% endblock %}

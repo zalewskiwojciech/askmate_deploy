@@ -232,6 +232,17 @@ def transform_question_into_dictionary(title, message, image):
     question['image'] = image
     return question
 
+def transform_comment_into_dictionary(question_id, message ):
+    comment = {}
+    #question = [util.calculate_timestamp(), 0,0, title, message, image]
+    comment['id'] = len(get_question_list())
+    comment['submission_time'] = util.calculate_timestamp()
+    comment['view_number'] = 0
+    comment['question_id'] = question_id
+    comment['answer_id'] = ''
+    comment['message'] = message
+    return comment
+
 
 @connection_with_database.connection_handler
 def add_new_row_to_question_list(cursor, new_row):
@@ -260,25 +271,20 @@ def add_new_row_to_question_list(cursor, new_row):
 
 
 @connection_with_database.connection_handler
-def add_new_row_to_answer_list(cursor, new_row):
+def add_comment_to_question(cursor, new_row):
     cursor.execute("""
-                        INSERT INTO answer( 
-                        submission_time, 
-                        vote_number, 
+                        INSERT INTO comment( 
+                        submission_time,  
                         question_id, 
-                        message, 
-                        image)
+                        message 
+                        )
                         VALUES (
                         %(submission_time)s,
-                        %(vote_number)s,
                         %(question_id)s,
-                        %(message)s,
-                        %(image)s);
+                        %(message)s);
     """, {'submission_time': new_row['submission_time'],
-          'vote_number': new_row['vote_number'],
           'question_id': new_row['question_id'],
-          'message': new_row['message'],
-          'image': new_row['image']})# data_list.append(new_row)
+          'message': new_row['message']})# data_list.append(new_row)
 
 
 @connection_with_database.connection_handler

@@ -85,11 +85,14 @@ def new_question():
 
     return render_template('add-question.html')
 
-@app.route('/question/add_comment_to_question/<question_id>')
+@app.route('/question/<question_id>/add_comment_to_question', methods=['GET', 'POST'])
 def question_add_comment(question_id: int):
-    # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
-    data_manager.add_comment_to_question(question_id)
-    return redirect(f'/question/{question_id}')
+    if request.method == 'POST':
+        message = request.form['message']
+        new_row = data_manager.transform_comment_into_dictionary(question_id, message )
+        data_manager.add_comment_to_question(new_row)
+        return redirect(f'/question/{question_id}')
+    return render_template('new_comment_to_question.html', question_id=question_id)
 
 @app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
 def new_answer(question_id):
