@@ -193,6 +193,36 @@ def get_all_answers_for_single_question (cursor, question_id):
     return all_answers_for_single_question
 
 
+@connection_with_database.connection_handler
+def get_all_comments_for_single_question (cursor, question_id):
+
+    cursor.execute("""
+                        SELECT * FROM comment
+                        WHERE question_id = %(question_id)s
+                        ORDER BY id;
+    """, {'question_id': question_id})
+
+    all_comments_for_single_question = cursor.fetchall()
+    if len(all_comments_for_single_question) == 0:
+        return False
+    return all_comments_for_single_question
+
+@connection_with_database.connection_handler
+def get_all_comments_for_single_answer (cursor, answer_id):
+
+    cursor.execute("""
+                        SELECT * FROM comment
+                        WHERE answer_id = %(answer_id)s
+                        ORDER BY id;
+    """, {'answer_id': answer_id})
+
+    all_comments_for_single_answer = cursor.fetchall()
+    if len(all_comments_for_single_answer) == 0:
+        return False
+    return all_comments_for_single_question
+
+
+
 def transform_answer_into_dictionary(question_id, message, image):
     answer = {}
     answer['id'] = util.find_biggest_answer_id(get_answer_list()) + 1
@@ -215,6 +245,7 @@ def transform_question_into_dictionary(title, message, image):
     question['image'] = image
     return question
 
+
 def transform_answer_comment_into_dictionary(answer_id,message):
     comment = {}
     comment['question_id'] = None
@@ -224,6 +255,18 @@ def transform_answer_comment_into_dictionary(answer_id,message):
     return comment
 
 # komentarz
+
+def transform_comment_into_dictionary(question_id, message ):
+    comment = {}
+    #question = [util.calculate_timestamp(), 0,0, title, message, image]
+    comment['submission_time'] = util.calculate_timestamp()
+    comment['question_id'] = question_id
+    comment['answer_id'] = None
+    comment['message'] = message
+    return comment
+
+
+
 @connection_with_database.connection_handler
 def add_new_row_to_question_list(cursor, new_row):
     #print(new_row)
@@ -248,28 +291,6 @@ def add_new_row_to_question_list(cursor, new_row):
           'title': new_row['title'],
           'message': new_row['message'],
           'image': new_row['image']})
-
-
-@connection_with_database.connection_handler
-def add_new_row_to_answer_list(cursor, new_row):
-    cursor.execute("""
-                        INSERT INTO answer( 
-                        submission_time, 
-                        vote_number, 
-                        question_id, 
-                        message, 
-                        image)
-                        VALUES (
-                        %(submission_time)s,
-                        %(vote_number)s,
-                        %(question_id)s,
-                        %(message)s,
-                        %(image)s);
-    """, {'submission_time': new_row['submission_time'],
-          'vote_number': new_row['vote_number'],
-          'question_id': new_row['question_id'],
-          'message': new_row['message'],
-          'image': new_row['image']})# data_list.append(new_row)
 
 
 @connection_with_database.connection_handler

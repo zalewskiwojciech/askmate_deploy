@@ -25,10 +25,34 @@
         <a href="{{url_for('question_vote_down', question_id=question_id)}}">
    <input type="button" value="vote this question down" />
         </a>
-
+    <a href="{{url_for('question_add_comment', question_id=question_id)}}">
+   <input type="button" value="add comment to this question" />
+             </a>
     </tr>
 </table>
 
+<br>
+
+        {% if not comments_for_single_question %}
+         <p>                         No comments for that question                                </p>
+
+
+        {% else %}
+
+
+        {% for comment in comments_for_single_question%}
+            <table>
+            <tr>
+            <td>{{ comment.id }}</td>
+            <td> {{comment.question_id}}</td>
+            <td>{{comment.message}}</td>
+            <td>{{comment.submission_time}}</td>
+            </tr>
+            </table>
+
+        {% endfor %}
+
+        {% endif %}
 <br><br><br>
 <h2>--------------------ANSWERS----------------------</h2>
 {% if not all_answers %}
