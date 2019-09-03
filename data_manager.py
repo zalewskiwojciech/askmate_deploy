@@ -193,6 +193,23 @@ def get_all_answers_for_single_question (cursor, question_id):
     return all_answers_for_single_question
 
 
+@connection_with_database.connection_handler
+def get_all_comments_for_single_question (cursor, question_id):
+
+    cursor.execute("""
+                        SELECT * FROM comment
+                        WHERE question_id = %(question_id)s
+                        ORDER BY id;
+    """, {'question_id': question_id})
+
+    all_comments_for_single_question = cursor.fetchall()
+    if len(all_comments_for_single_question) == 0:
+        return False
+    return all_comments_for_single_question
+
+
+
+
 def transform_answer_into_dictionary(question_id, message, image):
     answer = {}
     answer['id'] = util.find_biggest_answer_id(get_answer_list()) + 1

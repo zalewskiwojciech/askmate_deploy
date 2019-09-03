@@ -29,13 +29,17 @@ def show_search_result():
 def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id)
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
+    comments_for_single_question = data_manager.get_all_comments_for_single_question(question_id)
+
     return render_template('question.html',
                            question_id=question_id,
                            single_question=single_question,
                            QUESTION_HEADERS=connection.QUESTION_HEADERS,
                            all_answers=answers_list_for_single_question,
-                           ANSWER_HEADERS=connection.ANSWER_HEADERS
+                           ANSWER_HEADERS=connection.ANSWER_HEADERS,
+                           comments_for_single_question=comments_for_single_question
                            )
+
 
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
@@ -67,7 +71,6 @@ def answer_vote_down(answer_id: int):
 
     return redirect(f'/question/{question_id}')
 
-
 @app.route('/add-question', methods=['GET', 'POST'])
 def new_question():
     if request.method == 'POST':
@@ -82,16 +85,17 @@ def new_question():
 
     return render_template('add-question.html')
 
-
+@app.route('/question/add_comment_to_question/<question_id>')
+def question_add_comment(question_id: int):
+    # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
+    data_manager.add_comment_to_question(question_id)
+    return redirect(f'/question/{question_id}')
 
 @app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
 def new_answer(question_id):
     if request.method == 'POST':
         message = request.form['message']
         image = request.form['image']
-        # answer_in_dictionary_format = data_manager.transform_answer_into_dictionary(question_id, message, image)
-        # data_to_export = data_manager.add_new_row_to_answer_list(answer_in_dictionary_format)
-        # connection.export_all_data(connection.ANSWER_PATH, data_to_export, connection.ANSWER_HEADERS)
         new_row = data_manager.transform_answer_into_dictionary(question_id, message, image)
         data_manager.add_new_row_to_answer_list(new_row)
         return redirect(f'/question/{question_id}')
