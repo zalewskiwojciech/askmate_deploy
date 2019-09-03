@@ -215,7 +215,7 @@ def transform_question_into_dictionary(title, message, image):
     question['image'] = image
     return question
 
-
+# komentarz
 @connection_with_database.connection_handler
 def add_new_row_to_question_list(cursor, new_row):
     #print(new_row)
@@ -234,12 +234,12 @@ def add_new_row_to_question_list(cursor, new_row):
                         %(title)s,
                         %(message)s,
                         %(image)s);
-    """, {'submission_time' : new_row['submission_time'],
-          'view_number' : new_row['view_number'],
-          'vote_number' : new_row['vote_number'],
-          'title' : new_row['title'],
-          'message' : new_row['message'],
-          'image' : new_row['image']})
+    """, {'submission_time': new_row['submission_time'],
+          'view_number': new_row['view_number'],
+          'vote_number': new_row['vote_number'],
+          'title': new_row['title'],
+          'message': new_row['message'],
+          'image': new_row['image']})
 
 
 @connection_with_database.connection_handler
