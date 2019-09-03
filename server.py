@@ -103,6 +103,17 @@ def question_view_up(question_id: int):
     return redirect(f'/question/{question_id}')
 
 
+@app.route('/answer/add_comment/<answer_id>', methods=['GET', 'POST'])
+def comment_for_answer(answer_id):
+    if request.method == 'POST':
+        message = request.form['comment']
+        data_manager.add_comment_to_database(data_manager.transform_answer_comment_into_dictionary(answer_id,message))
+        return redirect('/')
+    return render_template('comment_for_answer.html', answer_id = answer_id)
+
+
+
+
 if __name__ == '__main__':
     app.run(
         debug = True,

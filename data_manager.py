@@ -215,6 +215,14 @@ def transform_question_into_dictionary(title, message, image):
     question['image'] = image
     return question
 
+def transform_answer_comment_into_dictionary(answer_id,message):
+    comment = {}
+    comment['question_id'] = None
+    comment['answer_id'] = answer_id
+    comment['message'] = message
+    comment['submission_time'] = util.calculate_timestamp()
+    return comment
+
 # komentarz
 @connection_with_database.connection_handler
 def add_new_row_to_question_list(cursor, new_row):
@@ -275,4 +283,27 @@ def update_view_number_up(cursor, question_id):
     
                     """,
                    {'question_id': question_id})
+
+
+@connection_with_database.connection_handler
+def add_comment_to_database(cursor, new_row):
+
+    cursor.execute("""
+                    INSERT INTO dekghdttahrq2c."public".comment(
+                    question_id,
+                    answer_id, 
+                    message, 
+                    submission_time)
+                    VALUES( 
+                        %(question_id)s,
+                        %(answer_id)s,
+                        %(message)s,
+                        %(submission_time)s);
+                    """,
+                    {'question_id': new_row['question_id'],
+                    'answer_id': new_row['answer_id'],
+                    'message': new_row['message'],
+                    'submission_time': new_row['submission_time']}
+                    )
+
 

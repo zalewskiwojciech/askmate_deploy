@@ -56,12 +56,11 @@
                 <div style="width: 10000px"> <td>{{field.message}}</td></div>
                 <td>{{field.image}}</td>
 
-             <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
-<input type="button" value="vote this answer up" />
-</a> </td>
-<td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
-<input type="button" value="vote this answer down" />
-</a> </td>
+                <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
+                    <input type="button" value="vote this answer up" /></a> </td>
+                <td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
+                    <input type="button" value="vote this answer down" /></a> </td>
+                <td> <a href="{{ url_for('comment_for_answer', answer_id=field.id)}}">Add a comment</a> </td>
 
     </tr>
     {% endfor %}
