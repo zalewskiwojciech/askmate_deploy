@@ -276,3 +276,26 @@ def update_view_number_up(cursor, question_id):
                     """,
                    {'question_id': question_id})
 
+@connection_with_database.connection_handler
+def check_username(cursor, username):
+
+    cursor.execute("""
+                    SELECT username 
+                    FROM users
+                    WHERE %(username)s = username;     
+                    """,
+                   {'username': username})
+    duplication = cursor.fetchall()
+    return duplication
+
+@connection_with_database.connection_handler
+def update_users_registration(cursor, username, password, registration_time):
+
+    cursor.execute("""
+                    INSERT INTO users (username, registration_time, password)
+                    VALUES (%(username)s, %(registration_time)s, %(password)s)
+                    """,
+                   {'username': username,
+                    'password': password,
+                    'registration_time': registration_time
+                    })

@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 
 import data_manager, connection, util
 
 app = Flask(__name__)
+
+app.secret_key = b'\x1bb\x10\xac\x01\x850\xc3[\xa7\n\x8f'
 
 @app.route('/')
 @app.route('/list')
@@ -16,6 +18,7 @@ def show_list():
 
 @app.route('/search_result', methods=['POST'])
 def show_search_result():
+
     if request.method=='POST':
         search_phrase = f'%{request.form["search"]}%'
         # search_result_questions = data_manager.search_question_id_from_questions(search_phrase)
@@ -27,6 +30,7 @@ def show_search_result():
 
 @app.route('/question/<question_id>')
 def show_question_and_answers(question_id: int):
+
     single_question=data_manager.get_single_question(question_id)
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
     return render_template('question.html',
@@ -39,6 +43,7 @@ def show_question_and_answers(question_id: int):
 
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
+
     # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
     data_manager.update_question_vote_up(question_id)
     return redirect(f'/question/{question_id}')
@@ -46,12 +51,14 @@ def question_vote_up(question_id: int):
 
 @app.route('/question/vote_down/<question_id>')
 def question_vote_down(question_id: int):
+
     # connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
     data_manager.update_question_vote_down(question_id)
     return redirect(f'/question/{question_id}')
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
+
     #connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
     data_manager.update_answer_vote_up(answer_id)
@@ -61,6 +68,7 @@ def answer_vote_up(answer_id: int):
 
 @app.route('/answer/vote_down/<answer_id>')
 def answer_vote_down(answer_id: int):
+
     #connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
     data_manager.update_answer_vote_down(answer_id)
@@ -70,6 +78,7 @@ def answer_vote_down(answer_id: int):
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def new_question():
+
     if request.method == 'POST':
         title = request.form['title']
         message = request.form['message']
@@ -86,6 +95,7 @@ def new_question():
 
 @app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
 def new_answer(question_id):
+
     if request.method == 'POST':
         message = request.form['message']
         image = request.form['image']
@@ -97,10 +107,32 @@ def new_answer(question_id):
         return redirect(f'/question/{question_id}')
     return render_template('new_answer.html', question_id = question_id)
 
+
 @app.route('/question/view_up/<question_id>')
 def question_view_up(question_id: int):
+
     data_manager.update_view_number_up(question_id)
     return redirect(f'/question/{question_id}')
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        password = util.hash_password(request.form['password'])
+        duplication = data_manager.check_username(username)
+        duplication_count = len(duplication)
+        registration_time = util.calculate_timestamp()
+        if len(duplication) != 0:
+            error = 'Invalid credentials'
+            return redirect('/registration')
+        else:
+            flash('You were successfully logged in')
+            data_manager.update_users_registration(username, password, registration_time)
+            return redirect('/')
+    return render_template('registration.html', error=error)
 
 
 if __name__ == '__main__':

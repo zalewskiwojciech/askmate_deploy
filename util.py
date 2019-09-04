@@ -1,6 +1,7 @@
 
 from datetime import datetime
 import data_manager
+import bcrypt
 
 def find_biggest_answer_id(answer_list):
 
@@ -10,6 +11,8 @@ def find_biggest_answer_id(answer_list):
         if  single_aswer_id > biggest_id:
             biggest_id = single_aswer_id
     return biggest_id
+
+
 
 
 def calculate_timestamp():
@@ -27,3 +30,7 @@ def find_question_id_from_answer_id(answer_id):
             break
     return question_id
 
+def hash_password(plain_text_password):
+    # By using bcrypt, the salt is saved into the hash itself
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
