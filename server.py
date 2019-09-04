@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect
 
 import data_manager, connection, util
 
@@ -123,16 +123,21 @@ def registration():
         username = request.form['username']
         password = util.hash_password(request.form['password'])
         duplication = data_manager.check_username(username)
-        duplication_count = len(duplication)
         registration_time = util.calculate_timestamp()
         if len(duplication) != 0:
-            error = 'Invalid credentials'
-            return redirect('/registration')
+            message = 'username alredy exists '
+            return render_template('registration.html', message=message )
+        elif len(username) < 5:
+            message = 'usernames must have at least 5 characters'
+            return render_template('registration.html', message = message)
+        elif len(request.form['password']) < 5:
+            message = 'password must have at least 5 characters'
+            return render_template('registration.html', message = message)
         else:
-            flash('You were successfully logged in')
+            message = 'you are succesfully registred'
             data_manager.update_users_registration(username, password, registration_time)
-            return redirect('/')
-    return render_template('registration.html', error=error)
+            return render_template('registration.html', message = message)
+    return render_template('registration.html')
 
 
 if __name__ == '__main__':
