@@ -30,14 +30,15 @@ def show_question_and_answers(question_id: int):
     single_question=data_manager.get_single_question(question_id)
     answers_list_for_single_question = data_manager.get_all_answers_for_single_question(question_id)
     comments_for_single_question = data_manager.get_all_comments_for_single_question(question_id)
-    comment_for_single_answer = data_manager.get_all_comments_for_single_answer()
+    all_comments = data_manager.get_all_comments()
     return render_template('question.html',
                            question_id=question_id,
                            single_question=single_question,
                            QUESTION_HEADERS=connection.QUESTION_HEADERS,
                            all_answers=answers_list_for_single_question,
                            ANSWER_HEADERS=connection.ANSWER_HEADERS,
-                           comments_for_single_question=comments_for_single_question
+                           comments_for_single_question=comments_for_single_question,
+                           all_comments = all_comments
                            )
 
 

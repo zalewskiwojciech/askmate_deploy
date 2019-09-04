@@ -86,9 +86,18 @@
                     <input type="button" value="vote this answer down" /></a> </td>
                 <td> <a href="{{ url_for('comment_for_answer', answer_id=field.id)}}">Add a comment</a> </td>
 
-    </tr>
-    {% endfor %}
-</table>
+        </tr>
+        {% for comment in all_comments %}
+            {% if comment.answer_id == field.id %}
+                <td>{{comment.id}}</td>
+                <td>{{comment.message}}</td>
+                <td>{{comment.submission_time}}</td>
+            {% endif %}
+        {% endfor %}
+
+        {% endfor %}
+
+        </table>
 
 </table>
 {%  endif %}

@@ -207,20 +207,6 @@ def get_all_comments_for_single_question (cursor, question_id):
         return False
     return all_comments_for_single_question
 
-@connection_with_database.connection_handler
-def get_all_comments_for_single_answer (cursor, answer_id):
-
-    cursor.execute("""
-                        SELECT * FROM comment
-                        WHERE answer_id = %(answer_id)s
-                        ORDER BY id;
-    """, {'answer_id': answer_id})
-
-    all_comments_for_single_answer = cursor.fetchall()
-    if len(all_comments_for_single_answer) == 0:
-        return False
-    return all_comments_for_single_question
-
 
 
 def transform_answer_into_dictionary(question_id, message, image):
@@ -326,5 +312,20 @@ def add_comment_to_database(cursor, new_row):
                     'message': new_row['message'],
                     'submission_time': new_row['submission_time']}
                     )
+
+@connection_with_database.connection_handler
+def get_all_comments(cursor):
+
+    cursor.execute("""
+                        SELECT * FROM comment
+                        ORDER BY id;
+    """)
+
+    all_comments = cursor.fetchall()
+    if len(all_comments) == 0:
+        return False
+    return all_comments
+
+
 
 
