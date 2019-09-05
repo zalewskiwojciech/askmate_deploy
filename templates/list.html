@@ -5,7 +5,19 @@
 
     <h1>Search</h1>
 
+    {% if session['username'] %}
 
+        {{ session['username']}}
+
+       <a href="{{url_for('log_out')}}">
+   <input type="button" value="log out" />
+        </a>
+
+        {% else %}
+
+        <a href="/user_login">Login</a>
+
+        {% endif %}
 
         <form action="/search_result", method="POST">
 
@@ -20,7 +32,7 @@
         <a href="/registration">Register</a>
 
 
-        <a href="/user_login">Login</a>
+
 
     <table>
         <tr>
