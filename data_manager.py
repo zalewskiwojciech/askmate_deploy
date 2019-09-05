@@ -219,10 +219,11 @@ def transform_answer_into_dictionary(question_id, message, image):
     answer['image'] = image
     return answer
 
-def transform_question_into_dictionary(title, message, image):
+def transform_question_into_dictionary(title, message, image, session_username_id):
     question = {}
     #question = [util.calculate_timestamp(), 0,0, title, message, image]
     question['id'] = len(get_question_list())
+    question['user_id'] = session_username_id
     question['submission_time'] = util.calculate_timestamp()
     question['view_number'] = 0
     question['vote_number'] = 0
@@ -378,3 +379,15 @@ def update_users_registration(cursor, username, password, registration_time):
                     'registration_time': registration_time
                     })
 
+
+@connection_with_database.connection_handler
+def get_session_user_id(cursor, username):
+
+    cursor.execute("""
+                    SELECT id 
+                    FROM users
+                    WHERE %(username)s = username;     
+                    """,
+                   {'username': username})
+    session_user_id = cursor.fetchall()
+    return session_user_id

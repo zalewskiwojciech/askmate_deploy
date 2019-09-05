@@ -87,7 +87,9 @@ def new_question():
         title = request.form['title']
         message = request.form['message']
         image = request.form['image']
-        new_row = data_manager.transform_question_into_dictionary(title, message, image)
+        username = session['username']
+        session_username_id = data_manager.get_session_user_id(username)
+        new_row = data_manager.transform_question_into_dictionary(title, message, image, session_username_id)
         data_manager.add_new_row_to_question_list(new_row)
         # data_list = data_manager.add_new_row_to_question_list(new_row)
         # connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
