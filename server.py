@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 
 import data_manager, connection, util
 
@@ -133,28 +133,23 @@ def comment_for_answer(answer_id):
     return render_template('comment_for_answer.html', answer_id = answer_id)
 
 
-@app.route('/registration', methods=['GET', 'POST'])
-def registration():
+@app.route('/user_login', methods=['GET', 'POST'])
+
+def user_login():
 
     if request.method == 'POST':
         username = request.form['username']
         password = util.hash_password(request.form['password'])
-        registration_time = util.calculate_timestamp()
-        duplication = data_manager.check_username(username)
-        if len(duplication) != 0:
-            message = 'username alredy exists '
-            return render_template('registration.html', message=message )
-        elif len(username) < 5:
-            message = 'usernames must have at least 5 characters'
-            return render_template('registration.html', message = message)
-        elif len(request.form['password']) < 5:
-            message = 'password must have at least 5 characters'
-            return render_template('registration.html', message = message)
-        else:
-            message = 'you are succesfully registred'
-            data_manager.update_users_registration(username, password, registration_time)
-            return render_template('registration.html', message = message)
-    return render_template('registration.html')
+
+        try:
+            if data_manager.is_user_valid(username, password):
+                session['username']=username
+
+            return redirect('/')
+        except Exception as e:
+            return render_template('login_error.html')
+
+    return render_template('user_login.html')
 
 
 if __name__ == '__main__':
