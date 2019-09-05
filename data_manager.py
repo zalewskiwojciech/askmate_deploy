@@ -391,3 +391,25 @@ def get_session_user_id(cursor, username):
                    {'username': username})
     session_user_id = cursor.fetchall()
     return session_user_id
+
+
+def is_user_valid(cursor, username, password):
+
+
+    cursor.execute("""
+                        SELECT  password 
+                        FROM users
+                        WHERE 
+                        %(username)s = username;     
+                        """,
+                   {'username': username,
+                    })
+    user_pw_select = cursor.fetchall()
+
+
+    is_password_valid = util.verify_password(password, user_pw_select[0].get('password', ' '))
+    if is_password_valid:
+
+        return True
+    else:
+        return False

@@ -141,17 +141,24 @@ def user_login():
 
     if request.method == 'POST':
         username = request.form['username']
-        password = util.hash_password(request.form['password'])
+        password = request.form['password']
 
         try:
             if data_manager.is_user_valid(username, password):
                 session['username']=username
+
 
             return redirect('/')
         except Exception as e:
             return render_template('login_error.html')
 
     return render_template('user_login.html')
+
+
+@app.route('/log_out')
+def log_out():
+    session.pop('username')
+    return redirect('/')
 
 
 if __name__ == '__main__':
