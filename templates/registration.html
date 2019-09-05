@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+ <form action="/registration" method="POST">
+
+    <p>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" placeholder="username"><br>
+    </p>
+     <p>
+
+        <label for="password">Password:</label><br>
+         <input type="text" id="password" name="password" placeholder="password"><br>
+     </p>
+        <button type="submit">Submit</button>
+        <br><br>
+
+ </form>
+
+
+
+    {% if message %}
+    <p>    {{ message }}
+    </p>
+    {%  endif %}
+
+    <h2><a href="/">HOME PAGE</a> </h2>
+
+{% endblock %}
