@@ -118,12 +118,11 @@ def question_view_up(question_id: int):
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
 
-    error = None
     if request.method == 'POST':
         username = request.form['username']
         password = util.hash_password(request.form['password'])
-        duplication = data_manager.check_username(username)
         registration_time = util.calculate_timestamp()
+        duplication = data_manager.check_username(username)
         if len(duplication) != 0:
             message = 'username alredy exists '
             return render_template('registration.html', message=message )
