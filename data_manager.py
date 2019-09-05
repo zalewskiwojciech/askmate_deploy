@@ -392,7 +392,7 @@ def get_session_user_id(cursor, username):
     session_user_id = cursor.fetchall()
     return session_user_id
 
-
+@connection_with_database.connection_handler
 def is_user_valid(cursor, username, password):
 
 
