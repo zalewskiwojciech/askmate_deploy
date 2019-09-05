@@ -242,6 +242,29 @@ def transform_answer_comment_into_dictionary(answer_id,message):
 
 # komentarz
 
+@connection_with_database.connection_handler
+def add_new_row_to_answer_list(cursor, new_row):
+    cursor.execute("""
+                        INSERT INTO answer( 
+                        submission_time, 
+                        vote_number, 
+                        question_id, 
+                        message, 
+                        image)
+                        VALUES (
+                        %(submission_time)s,
+                        %(vote_number)s,
+                        %(question_id)s,
+                        %(message)s,
+                        %(image)s);
+    """, {'submission_time': new_row['submission_time'],
+          'vote_number': new_row['vote_number'],
+          'question_id': new_row['question_id'],
+          'message': new_row['message'],
+          'image': new_row['image']})# data_list.append(new_row)
+
+
+
 def transform_comment_into_dictionary(question_id, message ):
     comment = {}
     #question = [util.calculate_timestamp(), 0,0, title, message, image]

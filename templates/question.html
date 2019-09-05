@@ -88,13 +88,17 @@
 
         </tr>
         {% for comment in all_comments %}
+            <tr id="comment">
             {% if comment.answer_id == field.id %}
-                <td>{{comment.id}}</td>
-                <td>{{comment.message}}</td>
+                <td> </td>
                 <td>{{comment.submission_time}}</td>
-            {% endif %}
+                <td> </td>
+                <td> </td>
+                <td>{{comment.message}}</td>
+                <td> </td>
+                {% endif %}
         {% endfor %}
-
+        </tr>
         {% endfor %}
 
         </table>

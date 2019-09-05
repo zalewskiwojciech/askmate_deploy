@@ -46,3 +46,7 @@ td {
 ol {
     border: 1px solid black;
 }
+
+.comment{
+    background-color: aliceblue;
+}
