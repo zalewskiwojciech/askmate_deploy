@@ -155,7 +155,6 @@ def registration():
 
 @app.route('/user_login', methods=['GET', 'POST'])
 def user_login():
-
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
