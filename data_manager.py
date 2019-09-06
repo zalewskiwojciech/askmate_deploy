@@ -219,11 +219,10 @@ def transform_answer_into_dictionary(question_id, message, image):
     answer['image'] = image
     return answer
 
-def transform_question_into_dictionary(title, message, image, session_username_id):
+def transform_question_into_dictionary(title, message, image):
     question = {}
-    #question = [util.calculate_timestamp(), 0,0, title, message, image]
     question['id'] = len(get_question_list())
-    question['user_id'] = session_username_id
+    question['username'] = None
     question['submission_time'] = util.calculate_timestamp()
     question['view_number'] = 0
     question['vote_number'] = 0
@@ -282,6 +281,7 @@ def add_new_row_to_question_list(cursor, new_row):
     #print(new_row)
     cursor.execute("""
                         INSERT INTO question ( 
+                        username,
                         submission_time,
                         view_number, 
                         vote_number, 
@@ -289,13 +289,15 @@ def add_new_row_to_question_list(cursor, new_row):
                         message, 
                         image)
                         VALUES (
+                        %(username)s
                         %(submission_time)s,
                         %(view_number)s,
                         %(vote_number)s,
                         %(title)s,
                         %(message)s,
                         %(image)s);
-    """, {'submission_time': new_row['submission_time'],
+    """, {'username': new_row['username'],
+          'submission_time': new_row['submission_time'],
           'view_number': new_row['view_number'],
           'vote_number': new_row['vote_number'],
           'title': new_row['title'],
@@ -392,7 +394,7 @@ def get_session_user_id(cursor, username):
     session_user_id = cursor.fetchall()
     return session_user_id
 
-
+@connection_with_database.connection_handler
 def is_user_valid(cursor, username, password):
 
 

@@ -21,9 +21,6 @@ def show_search_result():
 
     if request.method=='POST':
         search_phrase = f'%{request.form["search"]}%'
-        # search_result_questions = data_manager.search_question_id_from_questions(search_phrase)
-        # search_result_answers = data_manager.search_question_id_from_answers(search_phrase)
-        # search_result = (search_result_questions) + (search_result_answers)
         complete_questions_search_list = data_manager.search_question_list(search_phrase)
         len_list = len(complete_questions_search_list)
         return render_template('search_result.html', len_list=len_list, complete_questions_search_list=complete_questions_search_list,  QUESTION_HEADERS = connection.QUESTION_HEADERS)
@@ -49,7 +46,6 @@ def show_question_and_answers(question_id: int):
 @app.route('/question/vote_up/<question_id>')
 def question_vote_up(question_id: int):
 
-    # connection.modify_data(connection.QUESTION_PATH, question_id, +1, 'vote_number', connection.QUESTION_HEADERS)
     data_manager.update_question_vote_up(question_id)
     return redirect(f'/question/{question_id}')
 
@@ -57,14 +53,12 @@ def question_vote_up(question_id: int):
 @app.route('/question/vote_down/<question_id>')
 def question_vote_down(question_id: int):
 
-    # connection.modify_data(connection.QUESTION_PATH, question_id, -1, 'vote_number', connection.QUESTION_HEADERS)
     data_manager.update_question_vote_down(question_id)
     return redirect(f'/question/{question_id}')
 
 @app.route('/answer/vote_up/<answer_id>')
 def answer_vote_up(answer_id: int):
 
-    #connection.modify_data(connection.ANSWER_PATH, answer_id, +1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
     data_manager.update_answer_vote_up(answer_id)
 
@@ -74,7 +68,6 @@ def answer_vote_up(answer_id: int):
 @app.route('/answer/vote_down/<answer_id>')
 def answer_vote_down(answer_id: int):
 
-    #connection.modify_data(connection.ANSWER_PATH, answer_id, -1, 'vote_number', connection.ANSWER_HEADERS)
     question_id = ((data_manager.get_question_id_from_answer_id(answer_id))[0])['question_id']
     data_manager.update_answer_vote_down(answer_id)
 
@@ -84,15 +77,14 @@ def answer_vote_down(answer_id: int):
 def new_question():
 
     if request.method == 'POST':
+
         title = request.form['title']
         message = request.form['message']
         image = request.form['image']
-        username = session['username']
-        session_username_id = data_manager.get_session_user_id(username)
-        new_row = data_manager.transform_question_into_dictionary(title, message, image, session_username_id)
+        #username = session['username']
+        #users_id = ((data_manager.get_session_user_id(username))[0]).get('id')
+        new_row = data_manager.transform_question_into_dictionary(title, message, image)
         data_manager.add_new_row_to_question_list(new_row)
-        # data_list = data_manager.add_new_row_to_question_list(new_row)
-        # connection.export_all_data(connection.QUESTION_PATH, data_list, connection.QUESTION_HEADERS)
         return redirect('/')
 
     return render_template('add-question.html')
@@ -134,9 +126,34 @@ def comment_for_answer(answer_id):
         return redirect('/')
     return render_template('comment_for_answer.html', answer_id = answer_id)
 
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+
+        error = None
+        if request.method == 'POST':
+            username = request.form['username']
+            password = util.hash_password(request.form['password'])
+            duplication = data_manager.check_username(username)
+            registration_time = util.calculate_timestamp()
+            duplication = data_manager.check_username(username)
+            if len(duplication) != 0:
+                message = 'username alredy exists '
+                return render_template('registration.html', message=message)
+            elif len(username) < 5:
+                message = 'usernames must have at least 5 characters'
+                return render_template('registration.html', message=message)
+            elif len(request.form['password']) < 5:
+                message = 'password must have at least 5 characters'
+                return render_template('registration.html', message=message)
+            else:
+                message = 'you are succesfully registred'
+                data_manager.update_users_registration(username, password, registration_time)
+                return render_template('registration.html', message=message)
+        return render_template('registration.html')
+
+
 
 @app.route('/user_login', methods=['GET', 'POST'])
-
 def user_login():
 
     if request.method == 'POST':

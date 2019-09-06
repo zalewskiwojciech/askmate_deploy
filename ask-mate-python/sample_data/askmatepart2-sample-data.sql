@@ -20,7 +20,7 @@ ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS pk_user_id CAS
 DROP TABLE IF EXISTS public.question;
 CREATE TABLE question (
     id serial NOT NULL,
-    users_id integer,
+    username varchar,
     submission_time timestamp without time zone,
     view_number integer,
     vote_number integer,
@@ -83,7 +83,7 @@ ALTER TABLE ONLY users
     ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY question
-    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id);
+    ADD CONSTRAINT fk_users_id FOREIGN KEY (username) REFERENCES users(username);
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id);
@@ -123,8 +123,8 @@ INSERT INTO users VALUES (2, 'mytiger', '2016-07-01 22:03:00', '$2b$12$6X9LhQC58
 INSERT INTO users VALUES (3, 'dario456', '2017-07-01 22:03:00', '$2b$12$kmjEh7dVTLLvc4FSEY6uWuV6YjPILb.jAtwhRW3WK1cup6O0r3X2S');
 SELECT pg_catalog.setval('users_id_seq', 3, true);
 
-INSERT INTO question VALUES (0, 2, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
-INSERT INTO question VALUES (1, 1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
+INSERT INTO question VALUES (0, 'igor345', '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
+INSERT INTO question VALUES (1, 'mytiger', '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -133,7 +133,7 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png');
-INSERT INTO question VALUES (2, 3, '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
+INSERT INTO question VALUES (2, 'mytiger', '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
 ', NULL);
 SELECT pg_catalog.setval('question_id_seq', 2, true);
 

@@ -1,7 +1,7 @@
 
 #question_title {
     font-weight: bolder;
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
 }
 
 
@@ -13,7 +13,7 @@
 
 body {
     background-color: white;
-    background-image: url("/static/css/background-2072829_1920.jpg");
+    background-image: url("/static/css/950x350-anti-flash-white-solid-color-background.jpg");
     color: black;
     font-family: Montserrat, sans-serif;
 }
@@ -24,14 +24,31 @@ body {
 
 
 
+
 p {
-    background-color: white;
-    color: orange;
+    background-color: transparent;
+    color: darkslategrey;
     font-family: Montserrat, sans-serif;
     font-size: larger;
+    font-weight: bold;
     }
 
+a {
+    background-color: transparent;
+    color: black;
+    font-weight: bolder;
+    font-family: Montserrat, sans-serif;
+    font-size: medium;
+}
 
+.title_font {
+
+   background-color: transparent;
+    color: black;
+    font-weight: bolder;
+    font-family: Montserrat, sans-serif;
+    font-size: medium;
+}
 table, tr, th {
     background-color:white;
     border: 1px solid black;
@@ -39,6 +56,10 @@ table, tr, th {
     text-align: center;
     vertical-align: center;
     padding : 5px;
+    color: black;
+    font-weight: normal;
+    font-family: Montserrat, sans-serif;
+    font-size: medium;
 }
 
 td {

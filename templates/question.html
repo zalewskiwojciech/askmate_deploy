@@ -14,7 +14,7 @@
 
     <tr>
         {% for field in single_question %}
-             <td>{{ field.id }}</td><td> {{field.submission_time}}</td> <td>{{field.view_number}}</td><td>{{field.vote_number}}</td><td>{{field.title}}</td><td>{{field.message}}</td><td>{{field.image}}</td>
+             <td>{{ field.id }}</td><td>{{ field.username }}</td><td> {{field.submission_time}}</td> <td>{{field.view_number}}</td><td>{{field.vote_number}}</td><td>{{field.title}}</td><td>{{field.message}}</td><td>{{field.image}}</td>
 
         {% endfor %}
 
