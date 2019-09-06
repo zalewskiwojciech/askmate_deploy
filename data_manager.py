@@ -219,10 +219,10 @@ def transform_answer_into_dictionary(question_id, message, image):
     answer['image'] = image
     return answer
 
-def transform_question_into_dictionary(title, message, image):
+def transform_question_into_dictionary(title, message, image, users_id):
     question = {}
     question['id'] = len(get_question_list())
-    question['username'] = None
+    question['users_id'] = users_id
     question['submission_time'] = util.calculate_timestamp()
     question['view_number'] = 0
     question['vote_number'] = 0
@@ -281,7 +281,7 @@ def add_new_row_to_question_list(cursor, new_row):
     #print(new_row)
     cursor.execute("""
                         INSERT INTO question ( 
-                        username,
+                        users_id,
                         submission_time,
                         view_number, 
                         vote_number, 
@@ -289,14 +289,14 @@ def add_new_row_to_question_list(cursor, new_row):
                         message, 
                         image)
                         VALUES (
-                        %(username)s
+                        %(users_id)s,
                         %(submission_time)s,
                         %(view_number)s,
                         %(vote_number)s,
                         %(title)s,
                         %(message)s,
                         %(image)s);
-    """, {'username': new_row['username'],
+    """, {'users_id': new_row['users_id'],
           'submission_time': new_row['submission_time'],
           'view_number': new_row['view_number'],
           'vote_number': new_row['vote_number'],

@@ -81,9 +81,10 @@ def new_question():
         title = request.form['title']
         message = request.form['message']
         image = request.form['image']
-        #username = session['username']
-        #users_id = ((data_manager.get_session_user_id(username))[0]).get('id')
-        new_row = data_manager.transform_question_into_dictionary(title, message, image)
+        username = session['username']
+        print(username)
+        users_id = ((data_manager.get_session_user_id(username))[0]).get('id')
+        new_row = data_manager.transform_question_into_dictionary(title, message, image, users_id)
         data_manager.add_new_row_to_question_list(new_row)
         return redirect('/')
 
