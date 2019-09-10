@@ -2,114 +2,122 @@
 
 {% block content %}
 
-<body>
-<a href="/"> <img src="/static/images/znak_zapytania.png" height="100px"> </a>
-<br><br>
-<table>
-    <tr>
-        {% for header in QUESTION_HEADERS %}
-            <th>{{header}}</th>
-        {% endfor %}
-    </tr>
+    <body>
+    <a href="/"> <img src="/static/images/znak_zapytania.png" height="100px"> </a>
+    <br><br>
+    <table>
+        <tr>
+            {% for header in QUESTION_HEADERS %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
 
-    <tr>
-        {% for field in single_question %}
-             <td>{{ field.id }}</td><td>{{ field.username }}</td><td> {{field.submission_time}}</td> <td>{{field.view_number}}</td><td>{{field.vote_number}}</td><td>{{field.title}}</td><td>{{field.message}}</td><td>{{field.image}}</td>
-
-        {% endfor %}
-
-
-        <a href="{{url_for('question_vote_up', question_id=question_id)}}">
-   <input type="button" value="vote this question up" />
-        </a>
-        <a href="{{url_for('question_vote_down', question_id=question_id)}}">
-   <input type="button" value="vote this question down" />
-        </a>
-    <a href="{{url_for('question_add_comment', question_id=question_id)}}">
-   <input type="button" value="add comment to this question" />
-             </a>
-    </tr>
-</table>
-
-<br>
-
-        {% if not comments_for_single_question %}
-         <p>                         No comments for that question                                </p>
+        <tr>
+            {% for field in single_question %}
+                <td>{{ field.id }}</td>
+                <td>{{ field.username }}</td>
+                <td> {{ field.submission_time }}</td>
+                <td>{{ field.view_number }}</td>
+                <td>{{ field.vote_number }}</td>
+                <td>{{ field.title }}</td>
+                <td>{{ field.message }}</td>
+                <td>{{ field.image }}</td>
+            {% endfor %}
 
 
-        {% else %}
+            <a href="{{ url_for('question_vote_up', question_id=question_id) }}">
+                <input type="button" value="vote this question up"/>
+            </a>
+            <a href="{{ url_for('question_vote_down', question_id=question_id) }}">
+                <input type="button" value="vote this question down"/>
+            </a>
+            <a href="{{ url_for('question_add_comment', question_id=question_id) }}">
+                <input type="button" value="add comment to this question"/>
+            </a>
+        </tr>
+    </table>
+
+    <br>
+
+    {% if not comments_for_single_question %}
+        <p> No comments for that question </p>
 
 
-        {% for comment in comments_for_single_question%}
+    {% else %}
+
+
+        {% for comment in comments_for_single_question %}
             <table>
-            <tr>
-            <td>{{ comment.id }}</td>
-            <td> {{comment.question_id}}</td>
-            <td>{{comment.message}}</td>
-            <td>{{comment.submission_time}}</td>
-            </tr>
+                <tr>
+                    <td>{{ comment.id }}</td>
+                    <td> {{ comment.question_id }}</td>
+                    <td>{{ comment.message }}</td>
+                    <td>{{ comment.submission_time }}</td>
+                </tr>
             </table>
 
         {% endfor %}
 
-        {% endif %}
-<br><br><br>
-<h2>--------------------ANSWERS----------------------</h2>
-{% if not all_answers %}
-    <p>                         No answers for that question                                </p>
+    {% endif %}
+    <br><br><br>
+    <h2>--------------------ANSWERS----------------------</h2>
+    {% if not all_answers %}
+        <p> No answers for that question </p>
 
 
-{% else %}
-<table title="ANSWERS FOR GIVEN QUESTION">
+    {% else %}
+        <table title="ANSWERS FOR GIVEN QUESTION">
 
 
-<table>
-    <tr>
-        {% for header in ANSWER_HEADERS %}
-            <th>{{header}}</th>
-        {% endfor %}
-    </tr>
+            <table>
+                <tr>
+                    {% for header in ANSWER_HEADERS %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
 
 
-        {% for field in all_answers %}
-         <tr>
-                <td>{{field.id}}</td>
-                <td>{{field.submission_time}}</td>
-                <td>{{field.vote_number}}</td>
-                <td>{{field.question_id}}</td>
-                <div style="width: 10000px"> <td>{{field.message}}</td></div>
-                <td>{{field.image}}</td>
+                {% for field in all_answers %}
+                    <tr>
+                        <td>{{ field.id }}</td>
+                        <td>{{ field.submission_time }}</td>
+                        <td>{{ field.vote_number }}</td>
+                        <td>{{ field.question_id }}</td>
+                        <div style="width: 10000px">
+                            <td>{{ field.message }}</td>
+                        </div>
+                        <td>{{ field.image }}</td>
 
-                <td> <a href="{{url_for('answer_vote_up', answer_id=field.id)}}">
-                    <input type="button" value="vote this answer up" /></a> </td>
-                <td> <a href="{{url_for('answer_vote_down', answer_id=field.id)}}">
-                    <input type="button" value="vote this answer down" /></a> </td>
-                <td> <a href="{{ url_for('comment_for_answer', answer_id=field.id)}}">Add a comment</a> </td>
+                        <td><a href="{{ url_for('answer_vote_up', answer_id=field.id) }}">
+                            <input type="button" value="vote this answer up"/></a></td>
+                        <td><a href="{{ url_for('answer_vote_down', answer_id=field.id) }}">
+                            <input type="button" value="vote this answer down"/></a></td>
+                        <td><a href="{{ url_for('comment_for_answer', answer_id=field.id) }}">Add a comment</a></td>
 
-        </tr>
-        {% for comment in all_comments %}
-            <tr id="comment">
-            {% if comment.answer_id == field.id %}
-                <td> </td>
-                <td>{{comment.submission_time}}</td>
-                <td> </td>
-                <td> </td>
-                <td>{{comment.message}}</td>
-                <td> </td>
-                {% endif %}
-        {% endfor %}
-        </tr>
-        {% endfor %}
+                    </tr>
+                    {% for comment in all_comments %}
+                        <tr id="comment">
+                        {% if comment.answer_id == field.id %}
+                            <td></td>
+                            <td>{{ comment.submission_time }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ comment.message }}</td>
+                            <td></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+            </table>
 
         </table>
+    {% endif %}
+    <a href={{ url_for('new_answer', question_id = question_id) }}>Add answer</a><br>
+    <h2>---------------------------------------------------------</h2>
+    <br><br><br><br>
 
-</table>
-{%  endif %}
-<a href={{ url_for('new_answer', question_id = question_id) }}>Add answer</a><br>
-<h2>---------------------------------------------------------</h2>
-<br><br><br><br>
-
-<h2><a href="/">HOME PAGE</a> </h2>
-</body>
+    <h2><a href="/">HOME PAGE</a></h2>
+    </body>
 
 {% endblock %}
