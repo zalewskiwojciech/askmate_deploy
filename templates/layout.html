@@ -2,14 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" >
 
         <title>Ask mate</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
     </head>
     <body>
         <div class="content-wrapper">
             {% block content %} {% endblock %}
         </div>
+        <script src="/ask-mate-python/js/bootstrap.min.js" ></script>
+
     </body>
 </html>
-

@@ -12,32 +12,31 @@
 
         {% else %}
 
-        <a href="/user_login">Login</a>
+        <br><a href="/user_login">Login</a>
 
         {% endif %}
 
-            <a href="/registration">Register</a>
-
-    <h1>Search</h1>
-
-
-
-        <form action="/search_result", method="POST">
-
-
-                <textarea id="search" name="search" rows="1" cols="50"></textarea>
-
-                <input type="submit" value="Submit">
-                <br><br>
-
-        </form>
+            <a href="/registration">Register</a><br><br>
 
 
 
 
 
+        <form class="form-inline" action="/search_result", method="POST">
+            <div class="form-group form-group-sm">
 
-    <table>
+                 <input name="search" type="text" class="form-control" id="search" placeholder="search">
+
+            </div>
+         <button type="submit" class="btn btn-default">search</button>
+        </form><br><br>
+
+
+
+
+
+<div class="table-responsive">
+    <table class="table-striped">
         <tr>
             {% for header in QUESTION_HEADERS %}
                 <th>{{header}}</th>
@@ -57,7 +56,9 @@
             </tr>
         {% endfor %}
     </table>
+</div>
 
-    <h1><a href="/add-question">Add new question</a></h1>
+
+    <h3><a href="/add-question">Add new question</a></h3>
 
     {% endblock %}

@@ -5,7 +5,8 @@
     <body>
     <a href="/"> <img src="/static/images/znak_zapytania.png" height="100px"> </a>
     <br><br>
-    <table>
+    <table class="table-responsive">
+     <table class="table table-hover">
         <tr>
             {% for header in QUESTION_HEADERS %}
                 <th>{{ header }}</th>
@@ -36,6 +37,8 @@
             </a>
         </tr>
     </table>
+    </table>
+
 
     <br>
 
@@ -47,7 +50,7 @@
 
 
         {% for comment in comments_for_single_question %}
-            <table>
+            <table class="table-responsive">
                 <tr>
                     <td>{{ comment.id }}</td>
                     <td> {{ comment.question_id }}</td>
@@ -66,10 +69,13 @@
 
 
     {% else %}
-        <table title="ANSWERS FOR GIVEN QUESTION">
 
 
-            <table>
+<div class="table-responsive">
+        <table class="table table-hover" title="ANSWERS FOR GIVEN QUESTION">
+
+
+
                 <tr>
                     {% for header in ANSWER_HEADERS %}
                         <th>{{ header }}</th>
@@ -109,9 +115,10 @@
                 </tr>
                 {% endfor %}
 
-            </table>
+
 
         </table>
+</div>
     {% endif %}
     <a href={{ url_for('new_answer', question_id = question_id) }}>Add answer</a><br>
     <h2>---------------------------------------------------------</h2>
