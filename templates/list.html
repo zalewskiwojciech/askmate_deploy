@@ -2,35 +2,33 @@
 
     {% block content %}
 
-         {% if session['username'] %}
+{#         {% if session['username'] %}#}
+{#            {{ session['username']}}#}
+{##}
+{#            <a href="{{url_for('log_out')}}">#}
+{#            <input type="button" value="log out" /> </a>#}
+{##}
+{#         {% else %}#}
+{##}
+{#        <a href="/user_login">Login</a>#}
+{##}
+{#        {% endif %}#}
+{##}
+{#            <a href="/registration">Register</a>#}
 
-        {{ session['username']}}
-
-       <a href="{{url_for('log_out')}}">
-   <input type="button" value="log out" />
-        </a>
-
-        {% else %}
-
-        <a href="/user_login">Login</a>
-
-        {% endif %}
-
-            <a href="/registration">Register</a>
-
-    <h1>Search</h1>
+{#    <h1>Search</h1>#}
 
 
-
-        <form action="/search_result", method="POST">
-
-
-                <textarea id="search" name="search" rows="1" cols="50"></textarea>
-
-                <input type="submit" value="Submit">
-                <br><br>
-
-        </form>
+{##}
+{#        <form action="/search_result", method="POST">#}
+{##}
+{##}
+{#                <textarea id="search" name="search" rows="1" cols="50"></textarea>#}
+{##}
+{#                <input type="submit" value="Submit">#}
+{#                <br><br>#}
+{##}
+{#        </form>#}
 
 
 
