@@ -1,2 +1,2 @@
-# wswp-ask-mate
-Web and SQL with Python / 1st TW week / Ask Mate project
+# ask-mate
+Web Blog Service (SQL with Flask Python). A Team Project focused on basics of Web development
